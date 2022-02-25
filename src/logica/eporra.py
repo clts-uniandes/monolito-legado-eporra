@@ -14,7 +14,7 @@ class EPorra():
     def darListaCarreras(self):# SI Interesa
         return None
 
-    def crearCarrera(self, nombre):# SI Interesa
+    def crearCarrera(self, nombre, estaTerminada, competidores):# SI Interesa
         return None
 
     def darListaCompetidores(self, id): # SI Interesa
