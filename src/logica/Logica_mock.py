@@ -22,13 +22,13 @@ class Logica_mock():
         self.ganancias = [{'Carrera':'Carrera 1', 'Ganancias':[('Pepe Pérez',13),('Ana Andrade',0), ('Aymara Castillo',15)], 'Ganancias de la casa': 4},\
             {'Carrera':'Carrera 2', 'Ganancias':[('Pepe Pérez',32),('Ana Andrade',12), ('Aymara Castillo',34)], 'Ganancias de la casa': -10}]
 
-    def dar_carreras(self):
+    def dar_carreras(self):# SI Interesa
         return self.carreras.copy()
 
-    def dar_carrera(self, id_carrera):
+    def dar_carrera(self, id_carrera):# SI Interesa
         return self.carreras[id_carrera].copy()
     
-    def crear_carrera(self, nombre):
+    def crear_carrera(self, nombre):# SI Interesa
         self.carreras.append({'Nombre':nombre, 'Competidores':[], 'Abierta':True})
 
     def editar_carrera(self, id, nombre):
@@ -52,20 +52,20 @@ class Logica_mock():
     def eliminar_apostador(self, id):
         del self.apostadores[id]
 
-    def dar_competidores_carrera(self, id):
+    def dar_competidores_carrera(self, id): # SI Interesa
         return self.carreras[id]['Competidores'].copy()
 
-    def dar_competidor(self, id_carrera, id_competidor):
+    def dar_competidor(self, id_carrera, id_competidor):# NO Interesa
         return self.carreras[id_carrera]['Competidores'][id_competidor].copy()
 
-    def aniadir_competidor(self, id, nombre, probabilidad):
+    def aniadir_competidor(self, id, nombre, probabilidad):# SI Interesa
         self.carreras[id]['Competidores'].append({'Nombre':nombre, 'Probabilidad':probabilidad})
 
-    def editar_competidor(self, id_carrera, id_competidor, nombre, probabilidad):
+    def editar_competidor(self, id_carrera, id_competidor, nombre, probabilidad): # NO Interesa
         self.carreras[id_carrera]['Competidores'][id_competidor]['Nombre']=nombre
         self.carreras[id_carrera]['Competidores'][id_competidor]['Probabilidad']=probabilidad
     
-    def eliminar_competidor(self, id_carrera, id_competidor):
+    def eliminar_competidor(self, id_carrera, id_competidor): # NO Interesa
         del self.carreras[id_carrera]['Competidores'][id_competidor]
 
     def dar_apuestas_carrera(self, id_carrera):
