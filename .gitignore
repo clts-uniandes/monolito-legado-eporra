@@ -48,10 +48,7 @@ MANIFEST
 
 # Per-project virtualenvs
 .venv*/
-<<<<<<< HEAD
 eporra-env/*
-=======
 
 #Excluir locales
 env/*
->>>>>>> 82da643829135e023de44bf787e07b2d96ad5bce
