@@ -4,10 +4,12 @@ from src.modelo.declarative_base import engine, Base
 class EPorra():
 
     def __init__(self):
-        Base.metadata.create_all(engine)
+        #Base.metadata.create_all(engine)
+        self.descripcion = "Descipcion de la aplicaion"
+
     
     def darDescripcionAplicacion(self):
-        return None
+        return self.descripcion
     
     def darListaCarreras(self):# SI Interesa
         return None
