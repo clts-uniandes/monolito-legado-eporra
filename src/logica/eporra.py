@@ -9,12 +9,17 @@ class EPorra():
     def darDescripcionAplicacion(self):
         return None
     
-    def darListaCarreras(self):
+    def darListaCarreras(self):# SI Interesa
         return None
 
-    def crearCarrera(self, nombre, listaCompetidores):
+    def crearCarrera(self, nombre):# SI Interesa
+        return None
+
+    def darListaCompetidores(self, id): # SI Interesa
         return None
     
-    def crearCompetidor(self, nombre, probabilidad):
+    def crearCompetidor(self, id, nombre, probabilidad):# SI Interesa
         return None
+
+
 
