@@ -20,6 +20,8 @@ class EPorra():
         carreraExistente = session.query(Carrera).filter(Carrera.nombre == nombre).all()
         if len(carreraExistente) > 0:
             return False
+        if nombre == "" or nombre == None:
+            return False
         listaCompetidores = [] 
         for item in competidores:
             competidor = Competidor(nombre=item["Nombre"], probabilidad=item["Probabilidad"])
