@@ -131,7 +131,7 @@ class Vista_lista_carreras(QWidget):
             for dic_carrera in self.carreras:
                 numero_fila=numero_fila+1
 
-                etiqueta_nombre=QLabel(dic_carrera['Nombre'])          
+                etiqueta_nombre=QLabel(dic_carrera['nombre'])          
                 etiqueta_nombre.setWordWrap(True)
                 self.distribuidor_tabla_carreras.addWidget(etiqueta_nombre,numero_fila,0)
 
@@ -164,7 +164,7 @@ class Vista_lista_carreras(QWidget):
                 btn_eliminar.clicked.connect(partial(self.eliminar_carrera,numero_fila -1) )
                 self.distribuidor_tabla_carreras.addWidget(btn_eliminar,numero_fila,4,Qt.AlignCenter)
 
-                if not dic_carrera['Abierta']:
+                if not dic_carrera['estaTerminada']:
                     btn_ver_actividad.setDisabled(True)
                     btn_editar.setDisabled(True)
                     btn_terminar.setDisabled(True)

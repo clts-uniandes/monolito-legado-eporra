@@ -1,4 +1,5 @@
 import unittest
+from unittest import result
 
 from src.logica.eporra import EPorra
 from src.modelo.declarative_base import Session
@@ -16,21 +17,22 @@ class CarreraTestCase(unittest.TestCase):
         
 
     def test_crearCarrera(self):
-        carrera = self.eporra.crearCarrera("Mi primera carrera", False, self.competidoresPrueba)
-        self.assertEqual(carrera, True)
+        resultado = self.eporra.crearCarrera("Mi primera carrera", self.competidoresPrueba, False)
+        self.assertEqual(resultado, True)
     
     def test_crearCarreraDuplicada(self):
-        carrera1 = self.eporra.crearCarrera("Mi primera carrera", False, self.competidoresPrueba)
-        carrera2 = self.eporra.crearCarrera("Mi primera carrera", False, self.competidoresPrueba)
-        self.assertEqual(carrera2, False)
+        resultado1 = self.eporra.crearCarrera("Mi primera carrera", self.competidoresPrueba)
+        resultado2 = self.eporra.crearCarrera("Mi primera carrera", self.competidoresPrueba)
+        self.assertEqual(resultado1, True)
+        self.assertEqual(resultado2, False)
     
     def test_crearCarreraNombreVacio(self):
-        carrera1 = self.eporra.crearCarrera("", False, self.competidoresPrueba)
-        self.assertFalse(carrera1)
+        resultado = self.eporra.crearCarrera("", self.competidoresPrueba)
+        self.assertFalse(resultado)
 
     def test_crearCarreraValidadProbabilidad(self):
-        carrera1 = self.eporra.crearCarrera("Mi carrera", False, self.competidoresPruebaProbabilidad)
-        self.assertFalse(carrera1)
+        resultado = self.eporra.crearCarrera("Mi carrera", self.competidoresPruebaProbabilidad)
+        self.assertFalse(resultado)
     
     def test_darListaCarreras(self):
         listadoCarreras = self.eporra.darListaCarreras()

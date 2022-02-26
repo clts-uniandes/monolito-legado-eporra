@@ -12,4 +12,6 @@ class Competidor(Base):
     id = Column(Integer, primary_key=True)
     nombre = Column(String)
     probabilidad = Column(Float)
-    carrera = Column(Integer, ForeignKey('carrera.id'))
+    carrera_id = Column(Integer, ForeignKey('carrera.id'))
+
+    carrera = relationship("Carrera", back_populates="competidores")

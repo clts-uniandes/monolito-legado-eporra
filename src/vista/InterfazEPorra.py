@@ -26,17 +26,17 @@ class App_EPorra(QApplication):
         Esta función inicializa la ventana de la lista de carreras
         """
         self.vista_lista_carreras = Vista_lista_carreras(self) 
-        self.vista_lista_carreras.mostrar_carreras(self.logica.dar_carreras())
+        self.vista_lista_carreras.mostrar_carreras(self.logica.darListaCarreras())
 
     def guardar_carrera(self, nombre):
         """
         Esta función guarda una nueva carrera o los cambios sobre una existente
         """
         if self.carrera_actual == -1:
-            self.logica.crear_carrera(nombre)
+            self.logica.crearCarrera(nombre)
         else:
             self.logica.editar_carrera(self.carrera_actual, nombre)
-        self.vista_lista_carreras.mostrar_carreras(self.logica.dar_carreras())
+        self.vista_lista_carreras.mostrar_carreras(self.logica.darListaCarreras())
 
 
     def dar_competidor(self, id_competidor):
@@ -172,7 +172,7 @@ class App_EPorra(QApplication):
         """
         Esta función inserta un nuevo competidor en una carrera
         """
-        self.logica.aniadir_competidor(self.carrera_actual, nombre, probabilidad)
-        nombre_carrera = self.logica.dar_carrera(self.carrera_actual)['Nombre']
-        self.vista_carrera.mostrar_competidores(nombre_carrera, self.logica.dar_competidores_carrera(self.carrera_actual))
+        self.logica.crearCompetidor(self.carrera_actual, nombre, probabilidad)
+        nombre_carrera = self.logica.darCarrera(self.carrera_actual)['nombre']
+        self.vista_carrera.mostrar_competidores(nombre_carrera, self.logica.darListaCompetidores(self.carrera_actual))
 

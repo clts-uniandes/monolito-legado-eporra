@@ -10,21 +10,18 @@ class CompetidorTestCasde(unittest.TestCase):
         self.eporra = EPorra()
     
     def test_crearCompetidor(self):
-        dictCompetidor = {"Nombre": "Competidor 1", "Probabilidad": 0.2}
-        competidor = self.eporra.crearCompetidor(dictCompetidor)
-        self.assertTrue(competidor)
+        resultado = self.eporra.crearCompetidor(-1, "Competidor 1", 0.2)
+        self.assertTrue(resultado)
     
     def test_crearCompetidorDatosVacios(self):
-        competidorSinDatos = {"Nombre": "", "Probabilidad": None}
-        competidor = self.eporra.crearCompetidor(competidorSinDatos)
-        self.assertFalse(competidor)
+        resultado = self.eporra.crearCompetidor(-1, "", None)
+        self.assertFalse(resultado)
 
     def test_crearCompetidorDuplicado(self):
-        dictCompetidor1 = {"Nombre": "Competidor 1", "Probabilidad": 0.2}
-        dictCompetidor2 = {"Nombre": "Competidor 1", "Probabilidad": 0.2}
-        competidor1 = self.eporra.crearCompetidor(dictCompetidor1)
-        competidor2 = self.eporra.crearCompetidor(dictCompetidor2)
-        self.assertFalse(competidor2)
+        resultado1 = self.eporra.crearCompetidor(-1, "Competidor 1", 0.2)
+        resultado2 = self.eporra.crearCompetidor(-1, "Competidor 1", 0.2)
+        self.assertTrue(resultado1)
+        self.assertFalse(resultado2)
     
     def test_darListaCompetidores(self):
         listadoCompetidores = self.eporra.darListaCompetidores()
