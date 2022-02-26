@@ -31,4 +31,7 @@ class CarreraTestCase(unittest.TestCase):
     def test_crearCarreraValidadProbabilidad(self):
         carrera1 = self.eporra.crearCarrera("Mi carrera", False, self.competidoresPruebaProbabilidad)
         self.assertFalse(carrera1)
-
+    
+    def test_darListaCarreras(self):
+        listadoCarreras = self.eporra.darListaCarreras()
+        self.assertTrue(listadoCarreras)
