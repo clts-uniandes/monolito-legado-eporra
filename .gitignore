@@ -52,3 +52,4 @@ eporra-env/*
 
 #Excluir locales
 env/*
+aplicacion.sqlite

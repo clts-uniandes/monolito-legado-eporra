@@ -17,6 +17,9 @@ class EPorra():
         return None
 
     def crearCarrera(self, nombre, estaTerminada, competidores):
+        carreraExistente = session.query(Carrera).filter(Carrera.nombre == nombre).all()
+        if len(carreraExistente) > 0:
+            return False
         listaCompetidores = [] 
         for item in competidores:
             competidor = Competidor(nombre=item["Nombre"], probabilidad=item["Probabilidad"])
