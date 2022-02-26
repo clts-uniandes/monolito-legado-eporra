@@ -45,6 +45,8 @@ class EPorra():
         return None
     
     def crearCompetidor(self, competidor):
+        if not competidor["Nombre"] or not competidor["Probabilidad"]:
+            return False
         self.competidores.append(competidor)
         return True
 
