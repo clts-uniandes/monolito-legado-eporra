@@ -14,7 +14,8 @@ class EPorra():
         return self.descripcion
     
     def darListaCarreras(self):# SI Interesa
-        return None
+        listaCarrreras = session.query(Carrera).all()
+        return listaCarrreras
 
     def crearCarrera(self, nombre, estaTerminada, competidores):
         carreraExistente = session.query(Carrera).filter(Carrera.nombre == nombre).all()
