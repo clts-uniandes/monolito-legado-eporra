@@ -8,6 +8,7 @@ class EPorra():
     def __init__(self):
         Base.metadata.create_all(engine)
         self.descripcion = "Descipcion de la aplicaion"
+        self.competidores = []
 
     
     def darDescripcionAplicacion(self):
@@ -43,8 +44,9 @@ class EPorra():
     def darListaCompetidores(self, id): # SI Interesa
         return None
     
-    def crearCompetidor(self, id, nombre, probabilidad):# SI Interesa
-        return None
+    def crearCompetidor(self, competidor):
+        self.competidores.append(competidor)
+        return True
 
 
 
