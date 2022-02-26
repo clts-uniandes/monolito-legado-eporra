@@ -22,11 +22,15 @@ class EPorra():
             return False
         if nombre == "" or nombre == None:
             return False
-        listaCompetidores = [] 
+        listaCompetidores = []
+        totalProbabilidades = 0.0
         for item in competidores:
             competidor = Competidor(nombre=item["Nombre"], probabilidad=item["Probabilidad"])
             session.add(competidor)
             listaCompetidores.append(competidor)
+            totalProbabilidades = totalProbabilidades + item["Probabilidad"]
+            if totalProbabilidades > 1.0:
+                return False
         carrera = Carrera(nombre=nombre, estaTerminada=estaTerminada)
         carrera.competidores = listaCompetidores
         session.add(carrera)
