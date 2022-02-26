@@ -10,6 +10,8 @@ class CarreraTestCase(unittest.TestCase):
         self.eporra = EPorra()
         self.competidoresPrueba = [{'Nombre':'Pepito Perez', 'Probabilidad':0.5},\
                         {'Nombre':'Pepa Perez', 'Probabilidad':0.5}]
+        self.competidoresPruebaProbabilidad = [{'Nombre':'Pepito Perez', 'Probabilidad':0.8},\
+                        {'Nombre':'Pepa Perez', 'Probabilidad':0.5}]
 
         
 
@@ -24,5 +26,9 @@ class CarreraTestCase(unittest.TestCase):
     
     def test_crearCarreraNombreVacio(self):
         carrera1 = self.eporra.crearCarrera("", False, self.competidoresPrueba)
+        self.assertFalse(carrera1)
+
+    def test_crearCarreraValidadProbabilidad(self):
+        carrera1 = self.eporra.crearCarrera("Mi carrera", False, self.competidoresPruebaProbabilidad)
         self.assertFalse(carrera1)
 
