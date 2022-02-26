@@ -107,6 +107,7 @@ class Vista_lista_carreras(QWidget):
         self.distribuidor_tabla_carreras.setColumnStretch(4,0)
 
         #Ciclo para llenar la tabla
+        numero_fila=0
         if (self.carreras!= None and len(self.carreras)>0) :
             self.tabla_carreras.setVisible(True)
 
@@ -126,7 +127,7 @@ class Vista_lista_carreras(QWidget):
             etiqueta_acciones.setFont(QFont("Times",weight=QFont.Bold))               
             self.distribuidor_tabla_carreras.addWidget(etiqueta_acciones, 0,1,1,5, Qt.AlignCenter)
        
-            numero_fila=0
+            
             for dic_carrera in self.carreras:
                 numero_fila=numero_fila+1
 
