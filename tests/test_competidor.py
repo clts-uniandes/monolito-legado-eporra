@@ -13,3 +13,8 @@ class CompetidorTestCasde(unittest.TestCase):
         dictCompetidor = {"Nombre": "Competidor 1", "Probabilidad": 0.2}
         competidor = self.eporra.crearCompetidor(dictCompetidor)
         self.assertTrue(competidor)
+    
+    def test_crearCompetidorDatosVacios(self):
+        competidorSinDatos = {"Nombre": "", "Probabilidad": None}
+        competidor = self.eporra.crearCompetidor(competidorSinDatos)
+        self.assertFalse(competidor)
