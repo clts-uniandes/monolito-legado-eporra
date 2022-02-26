@@ -28,4 +28,4 @@ class CompetidorTestCasde(unittest.TestCase):
     
     def test_darListaCompetidores(self):
         listadoCompetidores = self.eporra.darListaCompetidores()
-        self.assertTrue(listadoCompetidores)
+        self.assertIsNotNone(listadoCompetidores)

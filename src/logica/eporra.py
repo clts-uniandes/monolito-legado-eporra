@@ -41,8 +41,8 @@ class EPorra():
             return True
         return False
 
-    def darListaCompetidores(self, id): # SI Interesa
-        return None
+    def darListaCompetidores(self, id = ""): # SI Interesa
+        return self.competidores
     
     def crearCompetidor(self, competidor):
         if not competidor["Nombre"] or not competidor["Probabilidad"]:
