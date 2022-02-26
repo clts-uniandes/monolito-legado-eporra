@@ -25,3 +25,7 @@ class CompetidorTestCasde(unittest.TestCase):
         competidor1 = self.eporra.crearCompetidor(dictCompetidor1)
         competidor2 = self.eporra.crearCompetidor(dictCompetidor2)
         self.assertFalse(competidor2)
+    
+    def test_darListaCompetidores(self):
+        listadoCompetidores = self.eporra.darListaCompetidores()
+        self.assertTrue(listadoCompetidores)
