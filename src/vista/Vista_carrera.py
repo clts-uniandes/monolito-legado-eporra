@@ -224,11 +224,12 @@ class Vista_carrera(QWidget):
         """
         Esta función guarda los cambios a la carrera (editando o guardando los nuevos competidores)
         """    
-        self.interfaz.guardar_carrera(self.texto_nombre.text())
-        for i, competidor in enumerate(self.competidores):
-            if competidor.get('Estado') == 'Nueva':
-                self.interfaz.aniadir_competidor(competidor['Nombre'], competidor['Probabilidad'])
-            else:
-                self.interfaz.editar_competidor(i, competidor['Nombre'], competidor['Probabilidad'])
+        exito = self.interfaz.guardar_carrera(self.texto_nombre.text(),self.competidores)
+        if exito == True: #verifca exito de guardado de data carrera para no ejecutar una operacion invalida de agregar/actualizar competidor
+            for i, competidor in enumerate(self.competidores):
+                if competidor.get('Estado') == 'Nueva':
+                    self.interfaz.aniadir_competidor(competidor['Nombre'], competidor['Probabilidad'])
+                else:
+                    self.interfaz.editar_competidor(i, competidor['Nombre'], competidor['Probabilidad'])
         self.hide()
         self.interfaz.mostrar_vista_lista_carreras()

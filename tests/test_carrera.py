@@ -13,27 +13,25 @@ class CarreraTestCase(unittest.TestCase):
                         {'Nombre':'Pepa Perez', 'Probabilidad':0.5}]
         self.competidoresPruebaProbabilidad = [{'Nombre':'Pepito Perez', 'Probabilidad':0.8},\
                         {'Nombre':'Pepa Perez', 'Probabilidad':0.5}]
-
         
-
     def test_crearCarrera(self):
-        resultado = self.eporra.crearCarrera("Mi primera carrera", self.competidoresPrueba, False)
-        self.assertEqual(resultado, True)
+        resultado = self.eporra.crearCarrera("Mi primera carrera", self.competidoresPrueba)
+        self.assertGreater(resultado, 0)
     
     def test_crearCarreraDuplicada(self):
-        resultado1 = self.eporra.crearCarrera("Mi primera carrera", self.competidoresPrueba)
-        resultado2 = self.eporra.crearCarrera("Mi primera carrera", self.competidoresPrueba)
-        self.assertEqual(resultado1, True)
-        self.assertEqual(resultado2, False)
+        resultado1 = self.eporra.crearCarrera("Mi segunda carrera", self.competidoresPrueba)
+        resultado2 = self.eporra.crearCarrera("Mi segunda carrera", self.competidoresPrueba)
+        self.assertGreater(resultado1, 0)
+        self.assertEqual(resultado2, 0)
     
     def test_crearCarreraNombreVacio(self):
         resultado = self.eporra.crearCarrera("", self.competidoresPrueba)
-        self.assertFalse(resultado)
+        self.assertEqual(resultado, 0)
 
     def test_crearCarreraValidadProbabilidad(self):
         resultado = self.eporra.crearCarrera("Mi carrera", self.competidoresPruebaProbabilidad)
-        self.assertFalse(resultado)
+        self.assertEqual(resultado, 0)
     
     def test_darListaCarreras(self):
         listadoCarreras = self.eporra.darListaCarreras()
-        self.assertTrue(listadoCarreras)
+        self.assertIsNotNone(listadoCarreras)

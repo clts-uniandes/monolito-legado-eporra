@@ -53,4 +53,5 @@ eporra-env/*
 #Excluir locales
 env/*
 aplicacion.sqlite
+aplicacion.sqlite-journal
 .vscode/*

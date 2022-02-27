@@ -11,4 +11,4 @@ class AplicacionTestCase(unittest.TestCase):
 
     def test_darAplicacion(self):
         resultadoEsperado = self.eporra.darDescripcionAplicacion()
-        self.assertEqual(resultadoEsperado, "Descipcion de la aplicaion")
+        self.assertEqual(resultadoEsperado, "Descripción de la aplicación")

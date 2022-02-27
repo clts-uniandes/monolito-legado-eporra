@@ -28,12 +28,16 @@ class App_EPorra(QApplication):
         self.vista_lista_carreras = Vista_lista_carreras(self) 
         self.vista_lista_carreras.mostrar_carreras(self.logica.darListaCarreras())
 
-    def guardar_carrera(self, nombre):
+    def guardar_carrera(self, nombre, competidores):
         """
         Esta función guarda una nueva carrera o los cambios sobre una existente
         """
         if self.carrera_actual == -1:
-            self.logica.crearCarrera(nombre)
+            nuevoId = self.logica.crearCarrera(nombre, competidores) #captura id de nueva carrera
+            if nuevoId == 0:
+                return False
+            self.carrera_actual = nuevoId
+            return True
         else:
             self.logica.editar_carrera(self.carrera_actual, nombre)
         self.vista_lista_carreras.mostrar_carreras(self.logica.darListaCarreras())
@@ -46,11 +50,12 @@ class App_EPorra(QApplication):
         return self.logica.dar_competidor(self.carrera_actual, id_competidor)
 
 
-    def aniadir_competidor(self, nombre, probabilidad):
-        """
-        Esta función inserta un nuevo competidor en la carrera actual
-        """
-        self.logica.aniadir_competidor(self.carrera_actual, nombre, probabilidad)
+    # Nunca se dispara, overridden por linea 173?
+    #def aniadir_competidor(self, nombre, probabilidad):
+    #    """
+    #    Esta función inserta un nuevo competidor en la carrera actual
+    #    """
+    #    self.logica.aniadir_competidor(self.carrera_actual, nombre, probabilidad)
            
     def editar_competidor(self, id_competidor, nombre, probabilidad):
         """
@@ -174,5 +179,5 @@ class App_EPorra(QApplication):
         """
         self.logica.crearCompetidor(self.carrera_actual, nombre, probabilidad)
         nombre_carrera = self.logica.darCarrera(self.carrera_actual)['nombre']
-        self.vista_carrera.mostrar_competidores(nombre_carrera, self.logica.darListaCompetidores(self.carrera_actual))
+        self.vista_carrera.mostrar_competidores(nombre_carrera, self.logica.darListaCompetidores(self.carrera_actual))# no parece ser necesaria?
 
