@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
+from src.modelo.apuesta import Apuesta
 
 from .declarative_base import Base
 
@@ -10,4 +11,4 @@ class Apostador(Base):
     id = Column(Integer, primary_key=True)
     nombre = Column(String)
     
-    apuesta = relationship("Apuesta", back_populates="apuestas")
+    apuestas = relationship("Apuesta")

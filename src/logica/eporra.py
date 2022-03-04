@@ -1,5 +1,6 @@
 from src.modelo.carrera import Carrera
 from src.modelo.competidor import Competidor
+from src.modelo.apostador import Apostador
 from src.modelo.declarative_base import engine, Base, session
 
 
@@ -58,7 +59,8 @@ class EPorra():
         return True
     
     def darListaApostadores(self):
-        return None
+        listaApostadores = [elem.__dict__ for elem in session.query(Apostador).all()]
+        return listaApostadores
 
 
 
