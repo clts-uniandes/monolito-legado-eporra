@@ -22,3 +22,7 @@ class ApostadorTestCase(unittest.TestCase):
         listaUnApostador = self.eporra.darListaApostadores()
         self.assertEqual(len(listaUnApostador),1)
     
+    def tearDown(self):
+        self.session.query(Apostador).delete()
+        self.session.commit()
+    
