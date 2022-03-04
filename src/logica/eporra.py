@@ -56,6 +56,9 @@ class EPorra():
         carreraPadre.competidores.append(Competidor(nombre=nombree, probabilidad=probabilidadd))
         session.commit()
         return True
+    
+    def darListaApostadores(self):
+        return None
 
 
 
