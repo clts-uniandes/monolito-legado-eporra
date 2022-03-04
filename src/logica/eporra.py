@@ -59,7 +59,7 @@ class EPorra():
         return True
     
     def darListaApostadores(self):
-        listaApostadores = [elem.__dict__ for elem in session.query(Apostador).all()]
+        listaApostadores = [elem.__dict__ for elem in session.query(Apostador).order_by(Apostador.nombre)]
         return listaApostadores
 
 
