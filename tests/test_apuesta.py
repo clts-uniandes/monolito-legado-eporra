@@ -35,6 +35,11 @@ class ApuestaTestCase(unittest.TestCase):
         valorApuestaPrueba = 0.3
         fracaso = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, valorApuestaPrueba, "Carlos Casas")
         self.assertFalse(fracaso)
+    
+    def test_crearApuestaApostadorVacio(self):
+        valorApuestaPrueba = 1.0
+        fracaso = self.eporra.crearApuesta("", self.idCarreraPrueba, valorApuestaPrueba, "Carlos Casas")
+        self.assertFalse(fracaso)
 
     
     def tearDown(self):
