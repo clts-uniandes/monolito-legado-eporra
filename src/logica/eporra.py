@@ -64,6 +64,8 @@ class EPorra():
         return listaApostadores
     
     def crearApuesta(self, nombre_apostador, id_carrera, valor_apuesta, nombre_competidor):
+        if valor_apuesta is None:
+            return False
         apostador = session.query(Apostador).filter(Apostador.nombre == nombre_apostador).first()
         competidor = session.query(Competidor).filter(Competidor.nombre == nombre_competidor, Competidor.carrera_id == id_carrera).first()
         apuesta = Apuesta(valor=valor_apuesta, apostador_id=apostador.id, carrera_id=id_carrera, competidor_id=competidor.id)
