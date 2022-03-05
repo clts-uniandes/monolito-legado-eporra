@@ -30,6 +30,11 @@ class ApuestaTestCase(unittest.TestCase):
         valorApuestaPrueba = None
         fracaso = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, valorApuestaPrueba, "Carlos Casas")
         self.assertFalse(fracaso)
+    
+    def test_crearApuestaMenorAMontoMinimo(self):
+        valorApuestaPrueba = 0.3
+        fracaso = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, valorApuestaPrueba, "Carlos Casas")
+        self.assertFalse(fracaso)
 
     
     def tearDown(self):
