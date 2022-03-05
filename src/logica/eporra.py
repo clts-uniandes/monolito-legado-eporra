@@ -64,11 +64,13 @@ class EPorra():
         return listaApostadores
     
     def crearApuesta(self, nombre_apostador, id_carrera, valor_apuesta, nombre_competidor):
-        if not valor_apuesta:
+        if valor_apuesta is None:
             return False
         if valor_apuesta < 1:
             return False
         if not nombre_apostador:
+            return False
+        if not nombre_competidor:
             return False
         apostador = session.query(Apostador).filter(Apostador.nombre == nombre_apostador).first()
         competidor = session.query(Competidor).filter(Competidor.nombre == nombre_competidor, Competidor.carrera_id == id_carrera).first()
