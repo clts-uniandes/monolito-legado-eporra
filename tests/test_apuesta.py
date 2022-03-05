@@ -3,6 +3,9 @@ import unittest
 from src.logica.eporra import EPorra
 from src.modelo.declarative_base import Session
 from src.modelo.apostador import Apostador
+from src.modelo.carrera import Carrera
+from src.modelo.competidor import Competidor
+from src.modelo.apuesta import Apuesta
 
 class ApuestaTestCase(unittest.TestCase):
     
@@ -22,4 +25,11 @@ class ApuestaTestCase(unittest.TestCase):
         self.eporra.crearCompetidor(idCarreraPrueba, "Carla Cueva", 0.5)
         exito = self.eporra.crearApuesta("Marco Martin", idCarreraPrueba, valorApuestaPrueba, "Carlos Casas")
         self.assertTrue(exito)
-        
+    
+    def tearDown(self):
+        self.session.query(Apuesta).delete()
+        self.session.query(Competidor).delete()
+        self.session.query(Carrera).delete()
+        self.session.query(Apostador).delete()
+        self.session.commit()
+    
