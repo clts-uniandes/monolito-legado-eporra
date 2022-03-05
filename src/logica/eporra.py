@@ -61,6 +61,9 @@ class EPorra():
     def darListaApostadores(self):
         listaApostadores = [elem.__dict__ for elem in session.query(Apostador).order_by(Apostador.nombre)]
         return listaApostadores
+    
+    def crearApuesta(self, nombre_apostador, id_carrera, valor_apuesta, nombre_competidor):
+        return False
 
 
 
