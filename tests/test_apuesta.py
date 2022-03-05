@@ -15,15 +15,13 @@ class ApuestaTestCase(unittest.TestCase):
         apostadorApuesta = Apostador(nombre="Marco Martin")
         self.session.add(apostadorApuesta)
         self.session.commit()
-        competidoresPrueba = [{'Nombre':'Carlos Casas', 'Probabilidad':0.5},\
-                         {'Nombre':'Carla Cueva', 'Probabilidad':0.5}]
+        competidoresPrueba = [{'Nombre':'Carlos Casas', 'Probabilidad':0.5}, {'Nombre':'Carla Cueva', 'Probabilidad':0.5}]
         self.idCarreraPrueba = self.eporra.crearCarrera("Mi carrera de apuesta", competidoresPrueba)
         self.eporra.crearCompetidor(self.idCarreraPrueba, "Carlos Casas", 0.5)
         self.eporra.crearCompetidor(self.idCarreraPrueba, "Carla Cueva", 0.5)
     
     def test_crearApuesta(self):
-        valorApuestaPrueba = 5.00
-        exito = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, valorApuestaPrueba, "Carlos Casas")
+        exito = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, 5.00, "Carlos Casas")
         self.assertTrue(exito)
     
     def test_crearApuestaSinValor(self):
@@ -37,15 +35,14 @@ class ApuestaTestCase(unittest.TestCase):
         self.assertFalse(fracaso)
     
     def test_crearApuestaApostadorVacio(self):
-        valorApuestaPrueba = 1.0
-        fracaso = self.eporra.crearApuesta("", self.idCarreraPrueba, valorApuestaPrueba, "Carlos Casas")
+        nombreApostador = ""
+        fracaso = self.eporra.crearApuesta(nombreApostador, self.idCarreraPrueba, 1.0, "Carlos Casas")
         self.assertFalse(fracaso)
     
     def test_crearApuestaCompetidorVacio(self):
-        valorApuestaPrueba = 1.0
-        fracaso = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, valorApuestaPrueba, "")
+        nombreCompetidor = ""
+        fracaso = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, 1.0, nombreCompetidor)
         self.assertFalse(fracaso)
-
     
     def tearDown(self):
         self.session.query(Apuesta).delete()
