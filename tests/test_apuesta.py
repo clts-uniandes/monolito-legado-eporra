@@ -45,8 +45,8 @@ class ApuestaTestCase(unittest.TestCase):
         self.assertFalse(fracaso)
     
     def test_darApuestasCarrerasVacio(self):
-        resultado = self.eporra.
-        self.assertListEqual([])
+        resultado = self.eporra.darApuestasCarreras()
+        self.assertListEqual([], resultado)
 
     
     def tearDown(self):
