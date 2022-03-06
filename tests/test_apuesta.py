@@ -45,7 +45,7 @@ class ApuestaTestCase(unittest.TestCase):
         self.assertFalse(fracaso)
     
     def test_darApuestasCarrerasVacio(self):
-        resultado = self.eporra.darApuestasCarreras()
+        resultado = self.eporra.darApuestasCarreras("Mi carrera de apuesta", "Carlos Casas")
         self.assertListEqual([], resultado)
 
     

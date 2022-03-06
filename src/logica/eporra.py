@@ -79,5 +79,5 @@ class EPorra():
         session.commit()
         return True
     def darApuestasCarreras(self, nombreCarrera, apostador):
-        return False
+        return []
 
