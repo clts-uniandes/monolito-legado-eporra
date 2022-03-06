@@ -47,12 +47,12 @@ class ApuestaTestCase(unittest.TestCase):
         self.assertFalse(fracaso)
     
     def test_darApuestasCarrerasVacio(self):
-        resultado = self.eporra.darApuestasCarreras("Mi carrera de apuesta", self.idCarreraPrueba)
+        resultado = self.eporra.darApuestasCarrera(self.idCarreraPrueba)
         self.assertListEqual([], resultado)
 
     def test_darApuestasCarrerasConCarreras(self):
         self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, 5.00, "Carlos Casas")
-        resultado = self.eporra.darApuestasCarreras("Mi carrera de apuesta", self.idCarreraPrueba)
+        resultado = self.eporra.darApuestasCarrera(self.idCarreraPrueba)
         self.assertListEqual(self.apuestasPruebaLista, resultado)
 
     
