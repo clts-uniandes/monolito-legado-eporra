@@ -79,6 +79,6 @@ class EPorra():
         session.commit()
         return True
     def darApuestasCarreras(self, nombreCarrera, idCarrera):
-        
-        return []
+        listaApuestas = session.query(Competidor.nombre.label("Competidor"), Apuesta.valor.label("Valor") ,Apostador.nombre.label("Apostador")).filter(Carrera.nombre == nombreCarrera, Carrera.id == idCarrera).join(Carrera, Apuesta.carrera_id == Carrera.id).join(Competidor, Competidor.id == Apuesta.competidor_id).join(Apostador, Apostador.id == Apuesta.apostador_id).all()
+        return [dict(zip(v.keys(), v)) for v in listaApuestas]
 
