@@ -44,6 +44,11 @@ class ApuestaTestCase(unittest.TestCase):
         fracaso = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, 1.0, nombreCompetidor)
         self.assertFalse(fracaso)
     
+    def test_darApuestasCarrerasVacio(self):
+        resultado = self.eporra.
+        self.assertListEqual([])
+
+    
     def tearDown(self):
         self.session.query(Apuesta).delete()
         self.session.query(Competidor).delete()
