@@ -78,6 +78,7 @@ class EPorra():
         session.add(apuesta)
         session.commit()
         return True
-    def darApuestasCarreras(self, nombreCarrera, apostador):
+    def darApuestasCarreras(self, nombreCarrera, idCarrera):
+        
         return []
 
