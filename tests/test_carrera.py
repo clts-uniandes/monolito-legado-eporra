@@ -3,6 +3,7 @@ from unittest import result
 
 from src.logica.eporra import EPorra
 from src.modelo.declarative_base import Session
+from src.modelo.carrera import Carrera
 
 class CarreraTestCase(unittest.TestCase):
 
@@ -35,3 +36,13 @@ class CarreraTestCase(unittest.TestCase):
     def test_darListaCarreras(self):
         listadoCarreras = self.eporra.darListaCarreras()
         self.assertIsNotNone(listadoCarreras)
+    
+    def test_terminarCarrera(self):
+        idCarrera = self.eporra.crearCarrera("Mi carrera a terminar", self.competidoresPrueba)
+        resultado = self.eporra.terminarCarrera(idCarrera)
+        self.assertTrue(resultado)
+    
+    def tearDown(self):
+        self.session.query(Carrera).delete()
+        self.session.commit()
+        
