@@ -23,15 +23,15 @@ class ApostadorTestCase(unittest.TestCase):
         self.assertEqual(len(listaUnApostador),1)
     
     def test_darListaApostadoresOrdenada(self):
-        self.apostadoresPrueba = [{'nombre':'Marta Conchita'},{'nombre':'Pablo Puebla'}]
+        self.apostadoresPrueba = [{'Nombre':'Marta Conchita'},{'Nombre':'Pablo Puebla'}]
         apostador2 = Apostador(nombre="Pablo Puebla")
         apostador3 = Apostador(nombre="Marta Conchita")
         self.session.add(apostador2)
         self.session.add(apostador3)
         self.session.commit()
         listaApostadoresOrdenada = self.eporra.darListaApostadores()
-        self.assertEqual(self.apostadoresPrueba[0]['nombre'],listaApostadoresOrdenada[0]['nombre'])
-        self.assertEqual(self.apostadoresPrueba[1]['nombre'],listaApostadoresOrdenada[1]['nombre'])
+        self.assertEqual(self.apostadoresPrueba[0]['Nombre'],listaApostadoresOrdenada[0]['Nombre'])
+        self.assertEqual(self.apostadoresPrueba[1]['Nombre'],listaApostadoresOrdenada[1]['Nombre'])
     
     def tearDown(self):
         self.session.query(Apostador).delete()

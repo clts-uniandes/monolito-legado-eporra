@@ -95,13 +95,13 @@ class App_EPorra(QApplication):
         """
         Esta función retorna la lista de apostadores desde la lógica
         """
-        return self.logica.dar_apostadores()
+        return self.logica.darListaApostadores()
 
     def dar_competidores(self):
         """
         Esta función retorna la lista de competidores
         """
-        return self.logica.dar_competidores_carrera(self.carrera_actual)
+        return self.logica.darListaCompetidores(self.carrera_actual)
 
     def mostrar_apuestas(self, id_carrera):
         """
@@ -123,7 +123,7 @@ class App_EPorra(QApplication):
         Esta función crea una nueva apuesta asociada a una carrera
         """
         self.logica.crearApuesta(apostador, self.carrera_actual, valor, competidor)
-        nombre_carrera = self.logica.darApuesta(self.carrera_actual)['nombre']
+        nombre_carrera = self.logica.darCarrera(self.carrera_actual).nombre
         self.vista_lista_apuestas.mostrar_apuestas(nombre_carrera, self.logica.darApuestasCarrera(self.carrera_actual))
 
 

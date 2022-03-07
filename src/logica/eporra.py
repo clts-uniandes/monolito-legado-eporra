@@ -1,4 +1,3 @@
-from re import I
 from src.modelo.carrera import Carrera
 from src.modelo.competidor import Competidor
 from src.modelo.apostador import Apostador
@@ -46,8 +45,8 @@ class EPorra():
         return carrera.id
 
     def darListaCompetidores(self, id = ""):
-        competidores = [elem.__dict__ for elem in session.query(Competidor).filter(Carrera.id.in_([id])).all()] 
-        return competidores
+        listaCompetidores = session.query(Competidor.nombre.label("Nombre"), Competidor.probabilidad.label("Probabilidad"), Competidor.carrera_id.label("idCarrera")).filter(Carrera.id.in_([id])).all() 
+        return [dict(zip(v.keys(), v)) for v in listaCompetidores]
     
     def crearCompetidor(self, carrera_actual, nombree, probabilidadd):
         if not nombree or not probabilidadd:
@@ -61,8 +60,9 @@ class EPorra():
         return True
     
     def darListaApostadores(self):
-        listaApostadores = [elem.__dict__ for elem in session.query(Apostador).order_by(Apostador.nombre)]
-        return listaApostadores
+        listaApostadores = session.query(Apostador.nombre.label("Nombre")).order_by(Apostador.nombre)
+        
+        return [dict(zip(v.keys(), v)) for v in listaApostadores]
     
     def crearApuesta(self, nombre_apostador, id_carrera, valor_apuesta, nombre_competidor):
         if valor_apuesta is None:
