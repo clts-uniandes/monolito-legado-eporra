@@ -1,3 +1,4 @@
+from re import I
 from src.modelo.carrera import Carrera
 from src.modelo.competidor import Competidor
 from src.modelo.apostador import Apostador
@@ -20,8 +21,8 @@ class EPorra():
         return listaCarrreras
     
     def darCarrera(self, id_carrera):
-        return session.query(Carrera).get(id_carrera).__dict__
-
+        carrera = session.query(Carrera).get(id_carrera)
+        return carrera
     def darUltimaCarrera(self):
         carrera = session.query(Carrera).order_by(Carrera.id.desc()).first()
         return carrera
