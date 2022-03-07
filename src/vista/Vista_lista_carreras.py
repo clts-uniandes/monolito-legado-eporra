@@ -130,7 +130,6 @@ class Vista_lista_carreras(QWidget):
             
             for dic_carrera in self.carreras:
                 numero_fila=numero_fila+1
-
                 etiqueta_nombre=QLabel(dic_carrera['nombre'])          
                 etiqueta_nombre.setWordWrap(True)
                 self.distribuidor_tabla_carreras.addWidget(etiqueta_nombre,numero_fila,0)
@@ -147,7 +146,7 @@ class Vista_lista_carreras(QWidget):
                 btn_editar.setToolTip("Añadir apuestas")
                 btn_editar.setFixedSize(40,40)
                 btn_editar.setIcon(QIcon("src/recursos/009-money.png"))
-                btn_editar.clicked.connect(partial(self.mostrar_apuestas,numero_fila -1 ) )
+                btn_editar.clicked.connect(partial(self.mostrar_apuestas, dic_carrera["id"]) )
                 self.distribuidor_tabla_carreras.addWidget(btn_editar,numero_fila,2,Qt.AlignCenter)
 
                 btn_terminar=QPushButton("",self)
@@ -164,7 +163,7 @@ class Vista_lista_carreras(QWidget):
                 btn_eliminar.clicked.connect(partial(self.eliminar_carrera,numero_fila -1) )
                 self.distribuidor_tabla_carreras.addWidget(btn_eliminar,numero_fila,4,Qt.AlignCenter)
 
-                if not dic_carrera['estaTerminada']:
+                if dic_carrera['estaTerminada']:
                     btn_ver_actividad.setDisabled(True)
                     btn_editar.setDisabled(True)
                     btn_terminar.setDisabled(True)

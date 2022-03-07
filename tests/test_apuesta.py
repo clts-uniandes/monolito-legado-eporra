@@ -19,6 +19,8 @@ class ApuestaTestCase(unittest.TestCase):
         self.idCarreraPrueba = self.eporra.crearCarrera("Mi carrera de apuesta", competidoresPrueba)
         self.eporra.crearCompetidor(self.idCarreraPrueba, "Carlos Casas", 0.5)
         self.eporra.crearCompetidor(self.idCarreraPrueba, "Carla Cueva", 0.5)
+        self.apuestasPrueba = [{"Marco Martin", 5.00, "Carlos Casas"}]
+        self.apuestasPruebaLista = [{"Apostador": "Marco Martin", "Valor": 5.00, "Competidor": "Carlos Casas"}]
     
     def test_crearApuesta(self):
         exito = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, 5.00, "Carlos Casas")
@@ -43,6 +45,16 @@ class ApuestaTestCase(unittest.TestCase):
         nombreCompetidor = ""
         fracaso = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, 1.0, nombreCompetidor)
         self.assertFalse(fracaso)
+    
+    def test_darApuestasCarrerasVacio(self):
+        resultado = self.eporra.darApuestasCarrera(self.idCarreraPrueba)
+        self.assertListEqual([], resultado)
+
+    def test_darApuestasCarrerasConCarreras(self):
+        self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, 5.00, "Carlos Casas")
+        resultado = self.eporra.darApuestasCarrera(self.idCarreraPrueba)
+        self.assertListEqual(self.apuestasPruebaLista, resultado)
+
     
     def tearDown(self):
         self.session.query(Apuesta).delete()

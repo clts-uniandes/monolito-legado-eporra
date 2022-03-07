@@ -1,3 +1,4 @@
+from re import I
 from src.modelo.carrera import Carrera
 from src.modelo.competidor import Competidor
 from src.modelo.apostador import Apostador
@@ -20,8 +21,8 @@ class EPorra():
         return listaCarrreras
     
     def darCarrera(self, id_carrera):
-        return session.query(Carrera).get(id_carrera).__dict__
-
+        carrera = session.query(Carrera).get(id_carrera)
+        return carrera
     def darUltimaCarrera(self):
         carrera = session.query(Carrera).order_by(Carrera.id.desc()).first()
         return carrera
@@ -78,4 +79,9 @@ class EPorra():
         session.add(apuesta)
         session.commit()
         return True
+    def darApuestasCarrera(self, idCarrera):
+
+        listaApuestas = session.query(Competidor.nombre.label("Competidor"), Apuesta.valor.label("Valor") ,Apostador.nombre.label("Apostador")).filter(Carrera.id == idCarrera).join(Carrera, Apuesta.carrera_id == Carrera.id).join(Competidor, Competidor.id == Apuesta.competidor_id).join(Apostador, Apostador.id == Apuesta.apostador_id).all()
+
+        return [dict(zip(v.keys(), v)) for v in listaApuestas]
 
