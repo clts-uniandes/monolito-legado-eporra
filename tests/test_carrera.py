@@ -43,6 +43,11 @@ class CarreraTestCase(unittest.TestCase):
         resultado = self.eporra.terminarCarrera(idCarrera)
         self.assertTrue(resultado)
     
+    def test_terminarCarreraIdInvalida(self):
+        idCarrera = self.eporra.crearCarrera("Mi carrera a terminar", self.competidoresPrueba)
+        resultado = self.eporra.terminarCarrera(idCarrera+1)
+        self.assertIsNone(resultado)
+    
     def tearDown(self):
         self.session.query(Carrera).delete()
         self.session.commit()
