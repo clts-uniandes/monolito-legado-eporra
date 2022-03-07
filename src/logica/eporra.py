@@ -86,5 +86,8 @@ class EPorra():
         return [dict(zip(v.keys(), v)) for v in listaApuestas]
     
     def terminarCarrera(self, idCarrera):
-        return False
+        carrera = self.darCarrera(idCarrera)
+        carrera.estaTerminada = True
+        session.commit()
+        return True
 

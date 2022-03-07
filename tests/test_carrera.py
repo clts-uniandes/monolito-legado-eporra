@@ -15,6 +15,7 @@ class CarreraTestCase(unittest.TestCase):
         self.competidoresPruebaProbabilidad = [{'Nombre':'Pepito Perez', 'Probabilidad':0.8},\
                         {'Nombre':'Pepa Perez', 'Probabilidad':0.5}]
         
+    
     def test_crearCarrera(self):
         resultado = self.eporra.crearCarrera("Mi primera carrera", self.competidoresPrueba)
         self.assertGreater(resultado, 0)
@@ -45,4 +46,4 @@ class CarreraTestCase(unittest.TestCase):
     def tearDown(self):
         self.session.query(Carrera).delete()
         self.session.commit()
-        
+    
