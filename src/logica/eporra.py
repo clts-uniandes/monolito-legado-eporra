@@ -88,7 +88,7 @@ class EPorra():
     def darReporteGanancias(self, carrera_actual, id_ganador):
         gananciasApostadores = []
         gananciasCasa = 0.0
-        if not id_ganador or id_ganador < 1:
+        if not id_ganador or id_ganador < 1 or not carrera_actual or carrera_actual < 1:
             return False
         apostadoresCarrera = session.query(Apuesta.apostador_id,Apostador.nombre).filter(Apuesta.carrera_id == carrera_actual).distinct().join(Apostador, Apuesta.apostador_id == Apostador.id).order_by(Apostador.nombre).all()
         apuestasCarrera = session.query(Apostador.nombre,Apuesta.apostador_id,Apuesta.competidor_id,Apuesta.valor).filter(Apuesta.carrera_id == carrera_actual).join(Apostador, Apuesta.apostador_id == Apostador.id).all()
