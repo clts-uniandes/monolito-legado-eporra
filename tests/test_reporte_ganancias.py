@@ -31,7 +31,7 @@ class ReporteGananciasTestCase(unittest.TestCase):
         competidorGanador = self.session.query(Competidor.id).filter(Competidor.nombre == "Carlos Casas").first()[0]
         listaApostadoresGanancias, gananciasCasa = self.eporra.darReporteGanancias(self.idCarreraPrueba,competidorGanador)
         self.assertIsNotNone(listaApostadoresGanancias)
-        self.assertEqual(-5.0,gananciasCasa)
+        self.assertEqual(-10.0,gananciasCasa)
         
     def tearDown(self):
         self.session.query(Apuesta).delete()

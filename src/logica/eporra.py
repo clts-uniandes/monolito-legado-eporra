@@ -88,6 +88,23 @@ class EPorra():
     def darReporteGanancias(self, carrera_actual, id_ganador):
         gananciasApostadores = []
         gananciasCasa = 0.0
+        apostadoresCarrera = session.query(Apuesta.apostador_id,Apostador.nombre).filter(Apuesta.carrera_id == carrera_actual).distinct().join(Apostador, Apuesta.apostador_id == Apostador.id).order_by(Apostador.nombre).all()
+        apuestasCarrera = session.query(Apostador.nombre,Apuesta.apostador_id,Apuesta.competidor_id,Apuesta.valor).filter(Apuesta.carrera_id == carrera_actual).join(Apostador, Apuesta.apostador_id == Apostador.id).all()
+        for apostador in apostadoresCarrera:
+            apostadorGana = 0
+            for apuesta in apuestasCarrera:
+                if apostador[0] == apuesta[1] and apuesta[2]==id_ganador:
+                    probabilidad = session.query(Competidor.probabilidad).filter(Competidor.id == id_ganador).first()[0]
+                    cuota = probabilidad/(1-probabilidad)
+                    apostadorGana += apuesta[3]+(apuesta[3]/cuota)
+                    gananciasApostadores.append((apostador[1],apostadorGana))
+        for apuesta in apuestasCarrera:
+            if apuesta[2]!=id_ganador:
+                gananciasCasa += apuesta[3]
+            else:
+                probabilidad = session.query(Competidor.probabilidad).filter(Competidor.id == id_ganador).first()[0]
+                gananciasCasa -= apuesta[3]+(apuesta[3]/(probabilidad/(1-probabilidad)))
+
         return gananciasApostadores, gananciasCasa
     
     def terminarCarrera(self, idCarrera):
