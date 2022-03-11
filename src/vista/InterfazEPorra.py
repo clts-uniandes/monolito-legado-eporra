@@ -126,7 +126,13 @@ class App_EPorra(QApplication):
         nombre_carrera = self.logica.dar_carrera(self.carrera_actual)['Nombre']
         self.vista_lista_apuestas.mostrar_apuestas(nombre_carrera, self.logica.dar_apuestas_carrera(self.carrera_actual))
 
-
+    def editar_apuesta(self, id_apuesta, competidor, valor, apostador):
+        """
+        Esta función edita una apuesta asociada a una carrera
+        """
+        nombre_carrera = self.logica.dar_carrera(self.carrera_actual)['Nombre']
+        self.logica.editar_apuesta(id_apuesta, apostador, nombre_carrera, valor, competidor)
+        self.vista_lista_apuestas.mostrar_apuestas(nombre_carrera, self.logica.dar_apuestas_carrera(self.carrera_actual))
 
     def eliminar_carrera(self, indice_carrera):
         """
