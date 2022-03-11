@@ -153,7 +153,7 @@ class Vista_lista_carreras(QWidget):
                 btn_terminar.setToolTip("Terminar")
                 btn_terminar.setFixedSize(40,40)
                 btn_terminar.setIcon(QIcon("src/recursos/reward.png"))
-                btn_terminar.clicked.connect(partial(self.terminar_carrera,numero_fila-1) )
+                btn_terminar.clicked.connect(partial(self.terminar_carrera, dic_carrera["id"]) )
                 self.distribuidor_tabla_carreras.addWidget(btn_terminar,numero_fila,3,Qt.AlignCenter)
 
                 btn_eliminar=QPushButton("",self)

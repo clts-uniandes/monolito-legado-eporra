@@ -37,7 +37,7 @@ class Dialogo_terminar_carrera(QDialog,):
         self.combobox_competidores = QComboBox(self)
         
         for i, competidor in enumerate(self.competidores):
-            self.combobox_competidores.addItem(competidor["Nombre"], userData=i)             
+            self.combobox_competidores.addItem(competidor["Nombre"], competidor["id"])             
         self.distribuidor_dialogo.addWidget(self.combobox_competidores,numero_fila,0,1,2)
         self.distribuidor_dialogo.setAlignment(self.combobox_competidores, Qt.AlignTop)
         numero_fila+=1

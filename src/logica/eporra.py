@@ -45,7 +45,7 @@ class EPorra():
         return carrera.id
 
     def darListaCompetidores(self, id = ""):
-        listaCompetidores = session.query(Competidor.nombre.label("Nombre"), Competidor.probabilidad.label("Probabilidad"), Competidor.carrera_id.label("idCarrera")).filter(Carrera.id.in_([id])).all() 
+        listaCompetidores = session.query(Competidor.id.label("id"), Competidor.nombre.label("Nombre"), Competidor.probabilidad.label("Probabilidad"), Competidor.carrera_id.label("idCarrera")).filter(Carrera.id.in_([id])).all() 
         return [dict(zip(v.keys(), v)) for v in listaCompetidores]
     
     def crearCompetidor(self, carrera_actual, nombree, probabilidadd):
@@ -81,9 +81,45 @@ class EPorra():
         return True
     def darApuestasCarrera(self, idCarrera):
 
-        listaApuestas = session.query(Competidor.nombre.label("Competidor"), Apuesta.valor.label("Valor") ,Apostador.nombre.label("Apostador")).filter(Carrera.id == idCarrera).join(Carrera, Apuesta.carrera_id == Carrera.id).join(Competidor, Competidor.id == Apuesta.competidor_id).join(Apostador, Apostador.id == Apuesta.apostador_id).all()
+        listaApuestas = session.query(Competidor.id.label("CompetidorId"),Competidor.nombre.label("Competidor"), Apuesta.valor.label("Valor"), Apostador.id.label("ApostadorId"), Apostador.nombre.label("Apostador")).filter(Carrera.id == idCarrera).join(Carrera, Apuesta.carrera_id == Carrera.id).join(Competidor, Competidor.id == Apuesta.competidor_id).join(Apostador, Apostador.id == Apuesta.apostador_id).all()
 
         return [dict(zip(v.keys(), v)) for v in listaApuestas]
+
+    def calcularCuota(self, probabilidad):
+        cuota = probabilidad / (1 - probabilidad)
+        return cuota
+
+    def calcularGanancia(self, valorApostado, probabilidad):
+        ganancia = valorApostado + (valorApostado / self.calcularCuota(probabilidad))
+        return ganancia 
+
+    def darCompetidor(self, idCompetidor):
+        competidor = session.query(Competidor).get(idCompetidor)
+        return competidor
+
+    def darReporteGanancias(self, carrera_actual, id_ganador):
+        gananciasApostadores = []
+        gananciasCasa = 0.0
+        if not id_ganador or id_ganador < 1 or not carrera_actual or carrera_actual < 1:
+            return False
+        apostadoresCarrera = session.query(Apuesta.apostador_id,Apostador.nombre).filter(Apuesta.carrera_id == carrera_actual).distinct().join(Apostador, Apuesta.apostador_id == Apostador.id).order_by(Apostador.nombre).all()
+        apuestasCarrera = self.darApuestasCarrera(carrera_actual)
+        ganador = self.darCompetidor(id_ganador)
+        for apostador in apostadoresCarrera:
+            apostadorGana = 0
+            for apuesta in apuestasCarrera:
+                if apostador[0] == apuesta["ApostadorId"] and apuesta["CompetidorId"] == id_ganador:
+                    probabilidad = ganador.probabilidad
+                    apostadorGana += self.calcularGanancia(apuesta["Valor"],probabilidad)
+            gananciasApostadores.append((apuesta['Apostador'],apostadorGana))
+        for apuesta in apuestasCarrera:
+            if apuesta["ApostadorId"] != id_ganador:
+                gananciasCasa += apuesta["Valor"]
+            else:
+                probabilidad = ganador.probabilidad
+                gananciasCasa -= self.calcularGanancia(apuesta["Valor"], probabilidad)
+
+        return gananciasApostadores, gananciasCasa
     
     def terminarCarrera(self, idCarrera):
         carrera = self.darCarrera(idCarrera)

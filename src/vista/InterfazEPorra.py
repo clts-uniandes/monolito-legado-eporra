@@ -101,6 +101,7 @@ class App_EPorra(QApplication):
         """
         Esta función retorna la lista de competidores
         """
+        print(self.carrera_actual)
         return self.logica.darListaCompetidores(self.carrera_actual)
 
     def mostrar_apuestas(self, id_carrera):
@@ -139,7 +140,7 @@ class App_EPorra(QApplication):
         """
         Esta función muestra el reporte de ganancias para una carrera con apuestas
         """
-        lista_ganancias, ganancias_casa = self.logica.dar_reporte_ganancias(self.carrera_actual, id_ganador)
+        lista_ganancias, ganancias_casa = self.logica.darReporteGanancias(self.carrera_actual, id_ganador)
         self.vista_reporte_ganancias = Vista_reporte_ganancias(self)
         self.vista_reporte_ganancias.mostrar_ganancias(lista_ganancias, ganancias_casa)
 
