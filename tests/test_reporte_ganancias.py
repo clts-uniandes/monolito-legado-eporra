@@ -36,7 +36,7 @@ class ReporteGananciasTestCase(unittest.TestCase):
     def test_mostrarReporteGananciasCompetidorInvalido(self):
         resultado = self.eporra.darReporteGanancias(self.idCarreraPrueba, 0)
         self.assertEqual(resultado, False)
-
+        
     def test_mostrarReporteGananciasCarreraInvalida(self):
         competidorGanador = self.session.query(Competidor.id).filter(Competidor.nombre == "Carlos Casas").first()[0]
         resultado = self.eporra.darReporteGanancias(0, competidorGanador)
