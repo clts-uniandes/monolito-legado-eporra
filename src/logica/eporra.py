@@ -85,6 +85,11 @@ class EPorra():
 
         return [dict(zip(v.keys(), v)) for v in listaApuestas]
     
+    def darReporteGanancias(self, carrera_actual, id_ganador):
+        gananciasApostadores = []
+        gananciasCasa = 0.0
+        return gananciasApostadores, gananciasCasa
+    
     def terminarCarrera(self, idCarrera):
         carrera = self.darCarrera(idCarrera)
         carrera.estaTerminada = True
