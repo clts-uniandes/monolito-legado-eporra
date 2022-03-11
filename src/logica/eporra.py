@@ -111,7 +111,7 @@ class EPorra():
                 if apostador[0] == apuesta["ApostadorId"] and apuesta["CompetidorId"] == id_ganador:
                     probabilidad = ganador.probabilidad
                     apostadorGana += self.calcularGanancia(apuesta["Valor"],probabilidad)
-            gananciasApostadores.append((apuesta['Apostador'],apostadorGana))
+            gananciasApostadores.append((apostador[1],apostadorGana))
         for apuesta in apuestasCarrera:
             if apuesta["ApostadorId"] != id_ganador:
                 gananciasCasa += apuesta["Valor"]
