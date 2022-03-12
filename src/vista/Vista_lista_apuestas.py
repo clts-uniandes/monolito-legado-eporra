@@ -180,8 +180,7 @@ class Vista_lista_apuestas(QWidget):
         dialogo = Dialogo_crear_apuesta(self.interfaz.dar_apostadores(), self.interfaz.dar_competidores(), self.interfaz.dar_apuesta(id_apuesta))
         dialogo.exec_()
         if dialogo.resultado == 1:
-            pass
-            #self.interfaz.aniadir_competidor(dialogo.texto_nombre.text(), float(dialogo.texto_probabilidad.text()))
+            self.interfaz.editar_apuesta(id_apuesta, str(dialogo.combobox_competidores.currentText()), float(dialogo.texto_valor.text()), str(dialogo.combobox_apostadores.currentText()))
             
    
     def eliminar_apuesta(self, id_apuesta):
