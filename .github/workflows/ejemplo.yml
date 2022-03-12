@@ -1,0 +1,56 @@
+name: Workflow feature
+
+# Controls when the action will run. 
+on:
+  push:
+    branches:
+      - develop
+      - 'feature_**'
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  development-test:
+    name: Pruebas
+    runs-on: ubuntu-latest
+    outputs:
+      exitoTestsStep: ${{ steps.exito_tests_step.outputs.exitoTestsStep }}
+    steps:
+    - name: Checkout de repositorio
+      uses: actions/checkout@v2
+    - name: Configuración de entorno de python
+      uses: actions/setup-python@v2
+      with:
+          python-version: '3.7'
+    - name: Instalación de librerías y dependencias
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Correr pruebas
+      id: correr-pruebas
+      run: python -m unittest discover -s tests
+    - name: Validar resultado sin errores
+      id: exito_tests_step
+      if: ${{ success() }}
+      env:
+        MENSAJE_EXITO: EXITO
+      run: echo "::set-output name=exitoTestsStep::${MENSAJE_EXITO}"
+  merging-feature-to-develop:
+    name: Accion merge a develop
+    runs-on: ubuntu-latest
+    outputs:
+      exitoMergeDevelopStep: ${{ steps.exito_merge_develop_step.outputs.exitoMergeDevelopStep }}
+    needs: development-test
+    if: ${{ (needs.development-test.outputs.exitoTestsStep == 'EXITO') && contains(github.event.head_commit.message, 'CIERREFUNCIONALIDAD') }}
+    steps:
+    - name: Merge feature to develop
+      uses: tukasz/direct-merge-action@v2.0.2
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        source-branch: ${{ github.ref }}
+        target-branch: develop
+    - name: Validar resultado sin errores
+      id: exito_merge_develop_step
+      if: ${{ success() }}
+      env:
+        MENSAJE_EXITO: EXITO
+      run: echo "::set-output name=exitoMergeDevelopStep::${MENSAJE_EXITO}"
