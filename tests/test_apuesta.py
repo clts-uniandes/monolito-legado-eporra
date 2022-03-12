@@ -20,7 +20,7 @@ class ApuestaTestCase(unittest.TestCase):
         self.eporra.crearCompetidor(self.idCarreraPrueba, "Carlos Casas", 0.5)
         self.eporra.crearCompetidor(self.idCarreraPrueba, "Carla Cueva", 0.5)
         self.apuestasPrueba = [{"Marco Martin", 5.00, "Carlos Casas"}]
-        self.apuestasPruebaLista = [{"Apostador": "Marco Martin", "Valor": 5.00, "Competidor": "Carlos Casas"}]
+        self.apuestasPruebaLista = [{"Apostador": "Marco Martin", 'ApostadorId': 1, 'CompetidorId': 1, "Valor": 5.00, "Competidor": "Carlos Casas"}]
     
     def test_crearApuesta(self):
         exito = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, 5.00, "Carlos Casas")
@@ -53,6 +53,7 @@ class ApuestaTestCase(unittest.TestCase):
     def test_darApuestasCarrerasConCarreras(self):
         self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, 5.00, "Carlos Casas")
         resultado = self.eporra.darApuestasCarrera(self.idCarreraPrueba)
+        print(resultado)
         self.assertListEqual(self.apuestasPruebaLista, resultado)
 
     
