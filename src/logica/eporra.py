@@ -46,6 +46,7 @@ class EPorra():
         return carrera.id
 
     def eliminarCarrera(self, idCarrera = 0):
+        print(idCarrera)
         if idCarrera == 0:
             return False
         carreraAEliminar = self.darCarrera(idCarrera)

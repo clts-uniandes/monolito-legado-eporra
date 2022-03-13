@@ -160,7 +160,7 @@ class Vista_lista_carreras(QWidget):
                 btn_eliminar.setToolTip("Eliminar")
                 btn_eliminar.setFixedSize(40,40)
                 btn_eliminar.setIcon(QIcon("src/recursos/005-delete.png"))
-                btn_eliminar.clicked.connect(partial(self.eliminar_carrera,numero_fila -1) )
+                btn_eliminar.clicked.connect(partial(self.eliminar_carrera, dic_carrera["id"]) )
                 self.distribuidor_tabla_carreras.addWidget(btn_eliminar,numero_fila,4,Qt.AlignCenter)
 
                 if dic_carrera['estaTerminada']:
