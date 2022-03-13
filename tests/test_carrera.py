@@ -70,6 +70,11 @@ class CarreraTestCase(unittest.TestCase):
         self.assertFalse(resultado)
         self.assertIsNotNone(carreraEliminada)
     
+    def test_eliminarCarreraSinID(self):
+        resultado = self.eporra.eliminarCarrera()
+        self.assertFalse(resultado)
+        
+    
     def tearDown(self):
         self.session.query(Carrera).delete()
         self.session.query(Apuesta).delete()
