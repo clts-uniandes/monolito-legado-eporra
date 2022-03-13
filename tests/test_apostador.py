@@ -18,6 +18,13 @@ class ApostadorTestCase(unittest.TestCase):
     def test_crearApostadorNombreVacio(self):
         resultado = self.eporra.crearApostador("")
         self.assertFalse(resultado)
+    
+    def test_crearApostadorNombreRepetido(self):
+        nombre = "Pepe Perez"
+        resultado1 = self.eporra.crearApostador(nombre)
+        resultado2 = self.eporra.crearApostador(nombre)
+        self.assertTrue(resultado1)
+        self.assertFalse(resultado2)
         
     def test_darListaApostadoresVacia(self):
         listaVacia = self.eporra.darListaApostadores()
