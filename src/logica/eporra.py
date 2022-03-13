@@ -75,14 +75,20 @@ class EPorra():
         
         return [dict(zip(v.keys(), v)) for v in listaApostadores]
     
+    def validarApuesta(self, apostador, idCarrera, valorApuesta, Competidor): 
+        if valorApuesta is None:
+            return False
+        if valorApuesta < 1:
+            return False
+        if not apostador:
+            return False
+        if not Competidor:
+            return False
+        return True
+
     def crearApuesta(self, nombre_apostador, id_carrera, valor_apuesta, nombre_competidor):
-        if valor_apuesta is None:
-            return False
-        if valor_apuesta < 1:
-            return False
-        if not nombre_apostador:
-            return False
-        if not nombre_competidor:
+        validar = self.validarApuesta(nombre_apostador, id_carrera, valor_apuesta, nombre_competidor)
+        if validar == False:
             return False
         apostador = session.query(Apostador).filter(Apostador.nombre == nombre_apostador).first()
         competidor = session.query(Competidor).filter(Competidor.nombre == nombre_competidor, Competidor.carrera_id == id_carrera).first()
@@ -98,6 +104,9 @@ class EPorra():
         return dict(zip(apuesta.keys(), apuesta))
     
     def editarApuesta (self, idApuesta, apostador, nombreCarrera, valor, competidor):
+        validar = self.validarApuesta(apostador, idApuesta, valor, competidor)
+        if validar == False:
+            return False
         apostador = session.query(Apostador).filter(Apostador.nombre == apostador).first()
         if apostador == None:
             return False
