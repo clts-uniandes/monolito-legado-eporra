@@ -62,6 +62,9 @@ class EPorra():
     def crearApostador(self, nombreApostador):
         if not nombreApostador:
             return False
+        apostadorExistente = session.query(Apostador).filter(Apostador.nombre == nombreApostador).all()
+        if len(apostadorExistente) > 0:
+            return False
         nuevoApostador=Apostador(nombre=nombreApostador)
         session.add(nuevoApostador)
         session.commit()
