@@ -60,10 +60,18 @@ class ApuestaTestCase(unittest.TestCase):
         valorApuestaPrueba = 5.00
         idApuesta = 1
         resultadoCrearApostador = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, valorApuestaPrueba, "Carlos Casas")
+        resultadoDarApuesta = self.eporra.darApuesta(idApuesta)
+        self.assertTrue(resultadoCrearApostador)
+        self.assertEqual(self.apuestasPrueba, resultadoDarApuesta)
+
+    def test_darApuestaIdInvalido(self):
+        valorApuestaPrueba = 5.00
+        idApuesta = 100
+        resultadoCrearApostador = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, valorApuestaPrueba, "Carlos Casas")
         self.assertTrue(resultadoCrearApostador)
         resultadoDarApuesta = self.eporra.darApuesta(idApuesta)
         print(resultadoDarApuesta)
-        self.assertEqual(self.apuestasPrueba, resultadoDarApuesta)
+        self.assertEqual(False, resultadoDarApuesta)
 
 
 
