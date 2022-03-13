@@ -75,14 +75,20 @@ class EPorra():
         
         return [dict(zip(v.keys(), v)) for v in listaApostadores]
     
+    def validarApuesta(self, apostador, idCarrera, valorApuesta, Competidor): 
+        if valorApuesta is None:
+            return False
+        if valorApuesta < 1:
+            return False
+        if not apostador:
+            return False
+        if not Competidor:
+            return False
+        return True
+
     def crearApuesta(self, nombre_apostador, id_carrera, valor_apuesta, nombre_competidor):
-        if valor_apuesta is None:
-            return False
-        if valor_apuesta < 1:
-            return False
-        if not nombre_apostador:
-            return False
-        if not nombre_competidor:
+        validar = self.validarApuesta(nombre_apostador, id_carrera, valor_apuesta, nombre_competidor)
+        if validar == False:
             return False
         apostador = session.query(Apostador).filter(Apostador.nombre == nombre_apostador).first()
         competidor = session.query(Competidor).filter(Competidor.nombre == nombre_competidor, Competidor.carrera_id == id_carrera).first()
@@ -90,9 +96,31 @@ class EPorra():
         session.add(apuesta)
         session.commit()
         return True
-    def darApuestasCarrera(self, idCarrera):
 
-        listaApuestas = session.query(Competidor.id.label("CompetidorId"),Competidor.nombre.label("Competidor"), Apuesta.valor.label("Valor"), Apostador.id.label("ApostadorId"), Apostador.nombre.label("Apostador")).filter(Carrera.id == idCarrera).join(Carrera, Apuesta.carrera_id == Carrera.id).join(Competidor, Competidor.id == Apuesta.competidor_id).join(Apostador, Apostador.id == Apuesta.apostador_id).all()
+    def darApuesta (self, idCarrera, idApuesta = 0):
+        apuesta = session.query(Apostador.nombre.label("Apostador"), Apuesta.valor.label("Valor"), Competidor.nombre.label("Competidor")).filter(Apuesta.id == idApuesta, Carrera.id == idCarrera).join(Carrera, Apuesta.carrera_id == Carrera.id).join(Competidor, Competidor.id == Apuesta.competidor_id).join(Apostador, Apostador.id == Apuesta.apostador_id).first()
+        if(apuesta == None):
+            return False
+        return dict(zip(apuesta.keys(), apuesta))
+    
+    def editarApuesta (self, idApuesta, apostador, nombreCarrera, valor, competidor):
+        validar = self.validarApuesta(apostador, idApuesta, valor, competidor)
+        if validar == False:
+            return False
+        apostador = session.query(Apostador).filter(Apostador.nombre == apostador).first()
+        if apostador == None:
+            return False
+        competidor = session.query(Competidor).filter(Competidor.nombre == competidor).first()
+        if competidor == None:
+            return False
+        resultadoEdicion = session.query(Apuesta).filter(Apuesta.id == idApuesta).update({"competidor_id": competidor.id, "valor": valor, "apostador_id": apostador.id})
+        session.commit()
+        if resultadoEdicion == None:
+            return False
+        return resultadoEdicion
+
+    def darApuestasCarrera(self, idCarrera):
+        listaApuestas = session.query(Apuesta.id.label("Id"), Competidor.id.label("CompetidorId"),Competidor.nombre.label("Competidor"), Apuesta.valor.label("Valor"), Apostador.id.label("ApostadorId"), Apostador.nombre.label("Apostador")).filter(Carrera.id == idCarrera).join(Carrera, Apuesta.carrera_id == Carrera.id).join(Competidor, Competidor.id == Apuesta.competidor_id).join(Apostador, Apostador.id == Apuesta.apostador_id).all()
 
         return [dict(zip(v.keys(), v)) for v in listaApuestas]
 

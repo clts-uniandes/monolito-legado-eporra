@@ -101,7 +101,6 @@ class App_EPorra(QApplication):
         """
         Esta función retorna la lista de competidores
         """
-        print(self.carrera_actual)
         return self.logica.darListaCompetidores(self.carrera_actual)
 
     def mostrar_apuestas(self, id_carrera):
@@ -117,7 +116,7 @@ class App_EPorra(QApplication):
         """
         Esta función retorna la información de una apuesta particular
         """
-        return self.logica.dar_apuesta(self.carrera_actual, id_apuesta)
+        return self.logica.darApuesta(self.carrera_actual, id_apuesta)
 
     def aniadir_apuesta(self, competidor, valor, apostador):
         """
@@ -131,9 +130,9 @@ class App_EPorra(QApplication):
         """
         Esta función edita una apuesta asociada a una carrera
         """
-        nombre_carrera = self.logica.dar_carrera(self.carrera_actual)['Nombre']
-        self.logica.editar_apuesta(id_apuesta, apostador, nombre_carrera, valor, competidor)
-        self.vista_lista_apuestas.mostrar_apuestas(nombre_carrera, self.logica.dar_apuestas_carrera(self.carrera_actual))
+        nombre_carrera = self.logica.darCarrera(self.carrera_actual).nombre
+        self.logica.editarApuesta(id_apuesta, apostador, nombre_carrera, valor, competidor)
+        self.vista_lista_apuestas.mostrar_apuestas(nombre_carrera, self.logica.darApuestasCarrera(self.carrera_actual))
 
     def eliminar_carrera(self, indice_carrera):
         """
@@ -174,7 +173,7 @@ class App_EPorra(QApplication):
         if id_carrera != -1:
             self.vista_carrera = Vista_carrera(self)
             nombre_carrera = self.logica.darCarrera(self.carrera_actual).nombre
-            self.vista_carrera.mostrar_competidores(nombre_carrera, self.logica.dar_competidores_carrera(self.carrera_actual))
+            self.vista_carrera.mostrar_competidores(nombre_carrera, self.logica.darListaCompetidores(self.carrera_actual))
         else:
             self.vista_carrera = Vista_carrera(self)
             self.vista_carrera.mostrar_competidores('',[])

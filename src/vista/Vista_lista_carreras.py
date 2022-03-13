@@ -139,7 +139,7 @@ class Vista_lista_carreras(QWidget):
                 btn_ver_actividad.setToolTip("Editar carrera")
                 btn_ver_actividad.setFixedSize(40,40)
                 btn_ver_actividad.setIcon(QIcon("src/recursos/004-edit-button.png"))
-                btn_ver_actividad.clicked.connect(partial(self.mostrar_carrera,numero_fila-1) )
+                btn_ver_actividad.clicked.connect(partial(self.mostrar_carrera,dic_carrera["id"]) )
                 self.distribuidor_tabla_carreras.addWidget(btn_ver_actividad,numero_fila,1,Qt.AlignCenter)
 
                 btn_editar=QPushButton("",self)
