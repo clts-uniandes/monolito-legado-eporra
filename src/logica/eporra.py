@@ -59,8 +59,11 @@ class EPorra():
         session.commit()
         return True
     
-    def crearApostador(self, nombre):
-        return False
+    def crearApostador(self, nombreApostador):
+        nuevoApostador=Apostador(nombre=nombreApostador)
+        session.add(nuevoApostador)
+        session.commit()
+        return True
     
     def darListaApostadores(self):
         listaApostadores = session.query(Apostador.nombre.label("Nombre")).order_by(Apostador.nombre)
