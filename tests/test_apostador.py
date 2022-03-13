@@ -9,6 +9,11 @@ class ApostadorTestCase(unittest.TestCase):
     def setUp(self):
         self.session = Session()
         self.eporra = EPorra()
+
+    def test_crearApostador(self):
+        nombre = "Pepe Perez"
+        resultado = self.eporra.crearApostador(nombre)
+        self.assertTrue(resultado)
         
     def test_darListaApostadoresVacia(self):
         listaVacia = self.eporra.darListaApostadores()
