@@ -60,6 +60,8 @@ class EPorra():
         return True
     
     def crearApostador(self, nombreApostador):
+        if not nombreApostador:
+            return False
         nuevoApostador=Apostador(nombre=nombreApostador)
         session.add(nuevoApostador)
         session.commit()
