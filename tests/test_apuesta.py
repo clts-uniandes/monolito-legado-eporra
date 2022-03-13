@@ -55,6 +55,16 @@ class ApuestaTestCase(unittest.TestCase):
         resultado = self.eporra.darApuestasCarrera(self.idCarreraPrueba)
         print(resultado)
         self.assertListEqual(self.apuestasPruebaLista, resultado)
+    
+    def test_darApuesta(self):
+        valorApuestaPrueba = 5.00
+        idApuesta = 1
+        resultadoCrearApostador = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, valorApuestaPrueba, "Carlos Casas")
+        self.assertTrue(resultadoCrearApostador)
+        resultadoDarApuesta = self.eporra.darApuesta(idApuesta)
+        self.assertEqual(self.apuestasPrueba, resultadoDarApuesta)
+
+
 
     
     def tearDown(self):
