@@ -99,9 +99,15 @@ class EPorra():
     
     def editarApuesta (self, idApuesta = 0, apuesta = None):
         apostador = session.query(Apostador).filter(Apostador.nombre == apuesta[0]).first()
+        if apostador == None:
+            return False
         competidor = session.query(Competidor).filter(Competidor.nombre == apuesta[2]).first()
+        if competidor == None:
+            return False
         resultadoEdicion = session.query(Apuesta).filter(Apuesta.id == idApuesta).update({"competidor_id": competidor.id, "valor": apuesta[1], "apostador_id": apostador.id})
         session.commit()
+        if resultadoEdicion == None:
+            return False
         return resultadoEdicion
 
     def darApuestasCarrera(self, idCarrera):
