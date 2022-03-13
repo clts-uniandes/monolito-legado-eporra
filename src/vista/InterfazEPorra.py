@@ -74,8 +74,8 @@ class App_EPorra(QApplication):
         """
         Esta función inserta un apostador a la aplicación
         """
-        self.logica.aniadir_apostador(nombre)
-        self.vista_lista_apostadores.mostrar_apostadores(self.logica.dar_apostadores())
+        self.logica.crearApostador(nombre)
+        self.vista_lista_apostadores.mostrar_apostadores(self.logica.darListaApostadores())
         
     def editar_apostador(self, id, nombre):
         """
@@ -89,7 +89,7 @@ class App_EPorra(QApplication):
         Esta función muestra la ventana con la lista de apostadores
         """
         self.vista_lista_apostadores=Vista_lista_apostadores(self)
-        self.vista_lista_apostadores.mostrar_apostadores(self.logica.dar_apostadores())
+        self.vista_lista_apostadores.mostrar_apostadores(self.logica.darListaApostadores())
 
     def dar_apostadores(self):
         """
