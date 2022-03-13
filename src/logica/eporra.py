@@ -96,8 +96,8 @@ class EPorra():
         if(apuesta == None):
             return False
         return apuesta
+        
     def darApuestasCarrera(self, idCarrera):
-
         listaApuestas = session.query(Competidor.id.label("CompetidorId"),Competidor.nombre.label("Competidor"), Apuesta.valor.label("Valor"), Apostador.id.label("ApostadorId"), Apostador.nombre.label("Apostador")).filter(Carrera.id == idCarrera).join(Carrera, Apuesta.carrera_id == Carrera.id).join(Competidor, Competidor.id == Apuesta.competidor_id).join(Apostador, Apostador.id == Apuesta.apostador_id).all()
 
         return [dict(zip(v.keys(), v)) for v in listaApuestas]
