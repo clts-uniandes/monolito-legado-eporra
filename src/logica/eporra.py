@@ -49,7 +49,8 @@ class EPorra():
         if idCarrera == 0:
             return False
         carreraAEliminar = self.darCarrera(idCarrera)
-        
+        if carreraAEliminar is None:
+            return False
         carreraC = self.darApuestasCarrera(idCarrera)
         if len(carreraC) > 0:
             return False
