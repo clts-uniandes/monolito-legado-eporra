@@ -14,6 +14,10 @@ class ApostadorTestCase(unittest.TestCase):
         nombre = "Pepe Perez"
         resultado = self.eporra.crearApostador(nombre)
         self.assertTrue(resultado)
+    
+    def test_crearApostadorNombreVacio(self):
+        resultado = self.eporra.crearApostador("")
+        self.assertFalse(resultado)
         
     def test_darListaApostadoresVacia(self):
         listaVacia = self.eporra.darListaApostadores()
