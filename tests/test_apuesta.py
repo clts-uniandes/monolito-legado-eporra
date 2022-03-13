@@ -75,22 +75,17 @@ class ApuestaTestCase(unittest.TestCase):
     def test_editarApuesta(self):
         valorApuestaPrueba = 5.00
         idApuesta = 1
-        apuestaEditada = ("Marco Martin", self.idCarreraPrueba, valorApuestaPrueba, "Carla Cueva")
+        apuestaEditada = ("Marco Martin", 6.00, "Carla Cueva")
         resultadoCrearApuesta = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, valorApuestaPrueba, "Carlos Casas")
-        resultadoDarApuesta = self.eporra.darApuesta(idApuesta)
-        resultadoEditarApuesta = self.eporra.editarApuesta(idApuesta, apuestaEditada)
+        editarApuesta = self.eporra.editarApuesta(idApuesta, apuestaEditada)
+        resultadoEdicion = self.eporra.darApuesta(idApuesta)
         self.assertTrue(resultadoCrearApuesta)
-        self.assertEqual(self.apuestasPrueba, resultadoDarApuesta)
-        self.assertEqual(apuestaEditada, resultadoEditarApuesta)
-
-
-
-
+        self.assertTrue(editarApuesta)
+        self.assertEqual(apuestaEditada, resultadoEdicion)
     
     def tearDown(self):
+        self.session.query(Carrera).delete()
         self.session.query(Apuesta).delete()
         self.session.query(Competidor).delete()
-        self.session.query(Carrera).delete()
         self.session.query(Apostador).delete()
         self.session.commit()
-    

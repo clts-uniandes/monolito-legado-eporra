@@ -96,7 +96,17 @@ class EPorra():
         if(apuesta == None):
             return False
         return apuesta
-        
+    
+    def editarApuesta (self, idApuesta = 0, apuesta = None):
+        print(apuesta)
+        apostador = session.query(Apostador).filter(Apostador.nombre == apuesta[0]).first()
+        competidor = session.query(Competidor).filter(Competidor.nombre == apuesta[2]).first()
+        resultadoEdicion = session.query(Apuesta).filter(Apuesta.id == idApuesta).update({"competidor_id": competidor.id, "valor": apuesta[1], "apostador_id": apostador.id})
+        session.commit()
+        if(resultadoEdicion == None):
+            return False
+        return resultadoEdicion
+
     def darApuestasCarrera(self, idCarrera):
         listaApuestas = session.query(Competidor.id.label("CompetidorId"),Competidor.nombre.label("Competidor"), Apuesta.valor.label("Valor"), Apostador.id.label("ApostadorId"), Apostador.nombre.label("Apostador")).filter(Carrera.id == idCarrera).join(Carrera, Apuesta.carrera_id == Carrera.id).join(Competidor, Competidor.id == Apuesta.competidor_id).join(Apostador, Apostador.id == Apuesta.apostador_id).all()
 
