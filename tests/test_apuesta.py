@@ -19,8 +19,8 @@ class ApuestaTestCase(unittest.TestCase):
         self.idCarreraPrueba = self.eporra.crearCarrera("Mi carrera de apuesta", competidoresPrueba)
         self.eporra.crearCompetidor(self.idCarreraPrueba, "Carlos Casas", 0.5)
         self.eporra.crearCompetidor(self.idCarreraPrueba, "Carla Cueva", 0.5)
-        self.apuestasPrueba = ("Marco Martin", 5.00, "Carlos Casas")
-        self.apuestasPruebaLista = [{"Apostador": "Marco Martin", 'ApostadorId': 1, 'CompetidorId': 1, "Valor": 5.00, "Competidor": "Carlos Casas"}]
+        self.apuestasPrueba = {'Apostador': 'Marco Martin', 'Valor': 5.0, 'Competidor': 'Carlos Casas'}
+        self.apuestasPruebaLista = [{"Id": 1, "Apostador": "Marco Martin", 'ApostadorId': 1, 'CompetidorId': 1, "Valor": 5.00, "Competidor": "Carlos Casas"}]
     
     def test_crearApuesta(self):
         exito = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, 5.00, "Carlos Casas")
@@ -53,14 +53,13 @@ class ApuestaTestCase(unittest.TestCase):
     def test_darApuestasCarrerasConCarreras(self):
         self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, 5.00, "Carlos Casas")
         resultado = self.eporra.darApuestasCarrera(self.idCarreraPrueba)
-        print(resultado)
         self.assertListEqual(self.apuestasPruebaLista, resultado)
     
     def test_darApuesta(self):
         valorApuestaPrueba = 5.00
         idApuesta = 1
         resultadoCrearApuesta = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, valorApuestaPrueba, "Carlos Casas")
-        resultadoDarApuesta = self.eporra.darApuesta(idApuesta)
+        resultadoDarApuesta = self.eporra.darApuesta(self.idCarreraPrueba,idApuesta)
         self.assertTrue(resultadoCrearApuesta)
         self.assertEqual(self.apuestasPrueba, resultadoDarApuesta)
 
@@ -75,10 +74,10 @@ class ApuestaTestCase(unittest.TestCase):
     def test_editarApuesta(self):
         valorApuestaPrueba = 5.00
         idApuesta = 1
-        apuestaEditada = ("Marco Martin", 6.00, "Carla Cueva")
+        apuestaEditada = {"Apostador": "Marco Martin", "Valor": 6.00, "Competidor": "Carla Cueva"}
         resultadoCrearApuesta = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, valorApuestaPrueba, "Carlos Casas")
-        editarApuesta = self.eporra.editarApuesta(idApuesta, apuestaEditada)
-        resultadoEdicion = self.eporra.darApuesta(idApuesta)
+        editarApuesta = self.eporra.editarApuesta(idApuesta, apuestaEditada["Apostador"], self.idCarreraPrueba, apuestaEditada["Valor"], apuestaEditada["Competidor"])
+        resultadoEdicion = self.eporra.darApuesta(self.idCarreraPrueba, idApuesta)
         self.assertTrue(resultadoCrearApuesta)
         self.assertTrue(editarApuesta)
         self.assertEqual(apuestaEditada, resultadoEdicion)
@@ -86,10 +85,10 @@ class ApuestaTestCase(unittest.TestCase):
     def test_editarApuestaIdInvalido(self):
         valorApuestaPrueba = 5.00
         idApuesta = 200
-        apuestaEditada = ("Marco Martin", 6.00, "Carla Cueva")
+        apuestaEditada = {"Apostador": "Marco Martin", "Valor": 6.00, "Competidor": "Carla Cueva"}
         resultadoCrearApuesta = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, valorApuestaPrueba, "Carlos Casas")
-        editarApuesta = self.eporra.editarApuesta(idApuesta, apuestaEditada)
-        resultadoEdicion = self.eporra.darApuesta(idApuesta)
+        editarApuesta = self.eporra.editarApuesta(idApuesta, apuestaEditada["Apostador"], self.idCarreraPrueba, apuestaEditada["Valor"], apuestaEditada["Competidor"])
+        resultadoEdicion = self.eporra.darApuesta(idApuesta, self.idCarreraPrueba)
         self.assertTrue(resultadoCrearApuesta)
         self.assertFalse(editarApuesta)
         self.assertEqual(False, resultadoEdicion)
@@ -97,9 +96,9 @@ class ApuestaTestCase(unittest.TestCase):
     def test_editarApuestaConDatosInvalido(self):
         valorApuestaPrueba = 5.00
         idApuesta = 200
-        apuestaEditada = ("Marco Martin", 6.00, "David")
+        apuestaEditada = {"Apostador": "Marco Martin", "Valor": 6.00, "Competidor": "Carla Cueva"}
         resultadoCrearApuesta = self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, valorApuestaPrueba, "Carlos Casas")
-        editarApuesta = self.eporra.editarApuesta(idApuesta, apuestaEditada)
+        editarApuesta = self.eporra.editarApuesta(idApuesta, apuestaEditada["Apostador"], self.idCarreraPrueba, apuestaEditada["Valor"], apuestaEditada["Competidor"])
         resultadoEdicion = self.eporra.darApuesta(idApuesta)
         self.assertTrue(resultadoCrearApuesta)
         self.assertFalse(editarApuesta)
