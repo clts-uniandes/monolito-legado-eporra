@@ -1,5 +1,4 @@
 import unittest
-from unittest import result
 
 from src.logica.eporra import EPorra
 from src.modelo.declarative_base import Session
@@ -48,8 +47,11 @@ class CarreraTestCase(unittest.TestCase):
         self.assertRaises(AttributeError, self.eporra.terminarCarrera, idCarrera+1)
 
     def test_eliminarCarrera(self):
-        resultado = self.eporra.eliminarCarrera()
+        idCcarrera = self.eporra.crearCarrera("Mi segunda carrera", self.competidoresPrueba)
+        resultado = self.eporra.eliminarCarrera(idCcarrera)
+        carreraEliminada = self.eporra.darCarrera(idCcarrera)
         self.assertTrue(resultado)
+        self.assertIsNone(carreraEliminada)
     
     def tearDown(self):
         self.session.query(Carrera).delete()

@@ -22,6 +22,7 @@ class EPorra():
     def darCarrera(self, id_carrera):
         carrera = session.query(Carrera).get(id_carrera)
         return carrera
+        
     def darUltimaCarrera(self):
         carrera = session.query(Carrera).order_by(Carrera.id.desc()).first()
         return carrera
@@ -43,6 +44,16 @@ class EPorra():
         session.refresh(carrera)
         session.commit()
         return carrera.id
+
+    def eliminarCarrera(self, idCarrera = 0):
+        print(idCarrera)
+        carreraAEliminar = self.darCarrera(idCarrera)
+        carreraC = self.darApuestasCarrera(idCarrera)
+        if len(carreraC) > 0:
+            return False
+        session.delete(carreraAEliminar)
+        session.commit()
+        return True
 
     def darListaCompetidores(self, id = ""):
         listaCompetidores = session.query(Competidor.id.label("id"), Competidor.nombre.label("Nombre"), Competidor.probabilidad.label("Probabilidad"), Competidor.carrera_id.label("idCarrera")).filter(Carrera.id.in_([id])).all() 
