@@ -91,8 +91,10 @@ class EPorra():
         session.commit()
         return True
 
-    def darApuesta (self, idApuesta):
+    def darApuesta (self, idApuesta = 0):
         apuesta = session.query(Apostador.nombre.label("Apostador"), Apuesta.valor.label("Valor"), Competidor.nombre.label("Competidor")).filter(Apuesta.id == idApuesta).join(Competidor, Competidor.id == Apuesta.competidor_id).join(Apostador, Apostador.id == Apuesta.apostador_id).first()
+        if(apuesta == None):
+            return False
         return apuesta
     def darApuestasCarrera(self, idCarrera):
 
