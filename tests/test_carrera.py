@@ -22,7 +22,7 @@ class CarreraTestCase(unittest.TestCase):
         nombreCompetidor1 = self.dataFactory.name()
         nombreCompetidor2 = self.dataFactory.name()
         self.competidoresPrueba = [{'Nombre': nombreCompetidor1, 'Probabilidad':probabilidad}, {'Nombre': nombreCompetidor2, 'Probabilidad':1-probabilidad}]
-        self.competidoresPruebaProbabilidad = [{'Nombre': nombreCompetidor1, 'Probabilidad':0.8}, {'Nombre': nombreCompetidor2, 'Probabilidad':0.5}]
+        self.competidoresPruebaProbabilidad = [{'Nombre': nombreCompetidor1, 'Probabilidad':0.8}, {'Nombre': nombreCompetidor2, 'Probabilidad':0.5}] 
         
         
     def test_crearCarrera(self):
