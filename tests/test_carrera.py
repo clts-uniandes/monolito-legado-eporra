@@ -1,9 +1,11 @@
 import unittest
-from unittest import result
 
 from src.logica.eporra import EPorra
 from src.modelo.declarative_base import Session
+from src.modelo.apostador import Apostador
 from src.modelo.carrera import Carrera
+from src.modelo.competidor import Competidor
+from src.modelo.apuesta import Apuesta
 
 class CarreraTestCase(unittest.TestCase):
 
@@ -14,6 +16,14 @@ class CarreraTestCase(unittest.TestCase):
                         {'Nombre':'Pepa Perez', 'Probabilidad':0.5}]
         self.competidoresPruebaProbabilidad = [{'Nombre':'Pepito Perez', 'Probabilidad':0.8},\
                         {'Nombre':'Pepa Perez', 'Probabilidad':0.5}]
+
+        apostadorApuesta = Apostador(nombre="Marco Martin")
+        self.session.add(apostadorApuesta)
+        self.session.commit()
+        competidoresPrueba2 = [{'Nombre':'Carlos Casas', 'Probabilidad':0.5}, {'Nombre':'Carla Cueva', 'Probabilidad':0.5}]
+        self.idCarreraPrueba = self.eporra.crearCarrera("Mi carrera de apuesta", competidoresPrueba2)
+        self.eporra.crearCompetidor(self.idCarreraPrueba, "Carlos Casas", 0.5)
+        self.eporra.crearCompetidor(self.idCarreraPrueba, "Carla Cueva", 0.5)
         
     
     def test_crearCarrera(self):
@@ -46,8 +56,32 @@ class CarreraTestCase(unittest.TestCase):
     def test_terminarCarreraIdInvalida(self):
         idCarrera = self.eporra.crearCarrera("Mi carrera a terminar", self.competidoresPrueba)
         self.assertRaises(AttributeError, self.eporra.terminarCarrera, idCarrera+1)
+
+    def test_eliminarCarrera(self):
+        resultado = self.eporra.eliminarCarrera(self.idCarreraPrueba)
+        carreraEliminada = self.eporra.darCarrera(self.idCarreraPrueba)
+        self.assertTrue(resultado)
+        self.assertIsNone(carreraEliminada)
+    
+    def test_eliminarCarreraConApuestas(self):
+        self.eporra.crearApuesta("Marco Martin", self.idCarreraPrueba, 5.00, "Carlos Casas")
+        resultado = self.eporra.eliminarCarrera(self.idCarreraPrueba)
+        carreraEliminada = self.eporra.darCarrera(self.idCarreraPrueba)
+        self.assertFalse(resultado)
+        self.assertIsNotNone(carreraEliminada)
+    
+    def test_eliminarCarreraSinID(self):
+        resultado = self.eporra.eliminarCarrera()
+        self.assertFalse(resultado)
+
+    def test_eliminarCarreraIdInvalido(self):
+        resultado = self.eporra.eliminarCarrera(200)
+        self.assertFalse(resultado)
     
     def tearDown(self):
         self.session.query(Carrera).delete()
+        self.session.query(Apuesta).delete()
+        self.session.query(Competidor).delete()
+        self.session.query(Apostador).delete()
         self.session.commit()
     

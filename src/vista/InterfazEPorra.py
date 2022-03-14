@@ -138,8 +138,8 @@ class App_EPorra(QApplication):
         """
         Esta función elimina una carrera
         """
-        self.logica.eliminar_carrera(indice_carrera)
-        self.vista_lista_carreras.mostrar_carreras(self.logica.dar_carreras())
+        self.logica.eliminarCarrera(indice_carrera)
+        self.vista_lista_carreras.mostrar_carreras(self.logica.darListaCarreras())
 
     def mostrar_reporte_ganancias(self, id_ganador):
         """
