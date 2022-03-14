@@ -231,5 +231,12 @@ class Vista_carrera(QWidget):
                     self.interfaz.aniadir_competidor(competidor['Nombre'], competidor['Probabilidad'])
                 else:
                     self.interfaz.editar_competidor(i, competidor['Nombre'], competidor['Probabilidad'])
+        else:
+            mensaje_error=QMessageBox()
+            mensaje_error.setIcon(QMessageBox.Critical)
+            mensaje_error.setText("Hubo un error al tratar de guardar la carrera, verifique las probabilidades de los competidores (suman en total 1, ninguna tiene valor 1) y nombre de carrera e intente de nuevo")
+            mensaje_error.setWindowTitle("Error inesperado")
+            mensaje_error.setStandardButtons(QMessageBox.Ok) 
+            mensaje_error.exec_()
         self.hide()
         self.interfaz.mostrar_vista_lista_carreras()

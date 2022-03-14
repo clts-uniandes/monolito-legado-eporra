@@ -229,7 +229,16 @@ class Vista_lista_carreras(QWidget):
         mensaje_confirmacion.setStandardButtons(QMessageBox.Yes | QMessageBox.No ) 
         respuesta=mensaje_confirmacion.exec_()
         if respuesta == QMessageBox.Yes:
-             self.interfaz.eliminar_carrera(indice_carrera)
+             resultado = self.interfaz.eliminar_carrera(indice_carrera)
+    
+    def errorEliminar(self):
+        mensaje_error=QMessageBox()
+        mensaje_error.setIcon(QMessageBox.Critical)
+        mensaje_error.setText("Hubo un error al eliminar la carrera, verifique que no tiene apuestas asociadas e intente de nuevo")
+        mensaje_error.setWindowTitle("Error inesperado")
+        mensaje_error.setStandardButtons(QMessageBox.Ok) 
+        mensaje_error.exec_()
+
     
 
 
