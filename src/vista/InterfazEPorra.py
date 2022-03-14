@@ -74,8 +74,8 @@ class App_EPorra(QApplication):
         """
         Esta función inserta un apostador a la aplicación
         """
-        self.logica.aniadir_apostador(nombre)
-        self.vista_lista_apostadores.mostrar_apostadores(self.logica.dar_apostadores())
+        self.logica.crearApostador(nombre)
+        self.vista_lista_apostadores.mostrar_apostadores(self.logica.darListaApostadores())
         
     def editar_apostador(self, id, nombre):
         """
@@ -89,63 +89,63 @@ class App_EPorra(QApplication):
         Esta función muestra la ventana con la lista de apostadores
         """
         self.vista_lista_apostadores=Vista_lista_apostadores(self)
-        self.vista_lista_apostadores.mostrar_apostadores(self.logica.dar_apostadores())
+        self.vista_lista_apostadores.mostrar_apostadores(self.logica.darListaApostadores())
 
     def dar_apostadores(self):
         """
         Esta función retorna la lista de apostadores desde la lógica
         """
-        return self.logica.dar_apostadores()
+        return self.logica.darListaApostadores()
 
     def dar_competidores(self):
         """
         Esta función retorna la lista de competidores
         """
-        return self.logica.dar_competidores_carrera(self.carrera_actual)
+        return self.logica.darListaCompetidores(self.carrera_actual)
 
     def mostrar_apuestas(self, id_carrera):
         """
         Esta función muestra las apuestas de una carrera
         """
         self.carrera_actual = id_carrera
-        nombre_carrera = self.logica.dar_carrera(id_carrera)['Nombre']
+        nombre_carrera = self.logica.darCarrera(id_carrera).nombre
         self.vista_lista_apuestas=Vista_lista_apuestas(self)
-        self.vista_lista_apuestas.mostrar_apuestas(nombre_carrera, self.logica.dar_apuestas_carrera(id_carrera))
+        self.vista_lista_apuestas.mostrar_apuestas(nombre_carrera, self.logica.darApuestasCarrera(id_carrera))
 
     def dar_apuesta(self, id_apuesta):
         """
         Esta función retorna la información de una apuesta particular
         """
-        return self.logica.dar_apuesta(self.carrera_actual, id_apuesta)
+        return self.logica.darApuesta(self.carrera_actual, id_apuesta)
 
     def aniadir_apuesta(self, competidor, valor, apostador):
         """
         Esta función crea una nueva apuesta asociada a una carrera
         """
-        self.logica.crear_apuesta(apostador, self.carrera_actual, valor, competidor)
-        nombre_carrera = self.logica.dar_carrera(self.carrera_actual)['Nombre']
-        self.vista_lista_apuestas.mostrar_apuestas(nombre_carrera, self.logica.dar_apuestas_carrera(self.carrera_actual))
+        self.logica.crearApuesta(apostador, self.carrera_actual, valor, competidor)
+        nombre_carrera = self.logica.darCarrera(self.carrera_actual).nombre
+        self.vista_lista_apuestas.mostrar_apuestas(nombre_carrera, self.logica.darApuestasCarrera(self.carrera_actual))
 
     def editar_apuesta(self, id_apuesta, competidor, valor, apostador):
         """
         Esta función edita una apuesta asociada a una carrera
         """
-        nombre_carrera = self.logica.dar_carrera(self.carrera_actual)['Nombre']
-        self.logica.editar_apuesta(id_apuesta, apostador, nombre_carrera, valor, competidor)
-        self.vista_lista_apuestas.mostrar_apuestas(nombre_carrera, self.logica.dar_apuestas_carrera(self.carrera_actual))
+        nombre_carrera = self.logica.darCarrera(self.carrera_actual).nombre
+        self.logica.editarApuesta(id_apuesta, apostador, nombre_carrera, valor, competidor)
+        self.vista_lista_apuestas.mostrar_apuestas(nombre_carrera, self.logica.darApuestasCarrera(self.carrera_actual))
 
     def eliminar_carrera(self, indice_carrera):
         """
         Esta función elimina una carrera
         """
-        self.logica.eliminar_carrera(indice_carrera)
-        self.vista_lista_carreras.mostrar_carreras(self.logica.dar_carreras())
+        self.logica.eliminarCarrera(indice_carrera)
+        self.vista_lista_carreras.mostrar_carreras(self.logica.darListaCarreras())
 
     def mostrar_reporte_ganancias(self, id_ganador):
         """
         Esta función muestra el reporte de ganancias para una carrera con apuestas
         """
-        lista_ganancias, ganancias_casa = self.logica.dar_reporte_ganancias(self.carrera_actual, id_ganador)
+        lista_ganancias, ganancias_casa = self.logica.darReporteGanancias(self.carrera_actual, id_ganador)
         self.vista_reporte_ganancias = Vista_reporte_ganancias(self)
         self.vista_reporte_ganancias.mostrar_ganancias(lista_ganancias, ganancias_casa)
 
@@ -162,9 +162,8 @@ class App_EPorra(QApplication):
         Esta función elimina una apuesta
         """
         resultado = self.logica.eliminar_apuesta(self.carrera_actual, id_apuesta)
-        print(resultado)
-        nombre_carrera = self.logica.dar_carrera(self.carrera_actual)['Nombre']
-        self.vista_lista_apuestas.mostrar_apuestas(nombre_carrera, self.logica.dar_apuestas_carrera(self.carrera_actual))
+        nombre_carrera = self.logica.darCarrera(self.carrera_actual).nombre
+        self.vista_lista_apuestas.mostrar_apuestas(nombre_carrera, self.logica.darApuestasCarrera(self.carrera_actual))
     
     def mostrar_carrera(self, id_carrera=-1):
         """
@@ -173,8 +172,8 @@ class App_EPorra(QApplication):
         self.carrera_actual = id_carrera
         if id_carrera != -1:
             self.vista_carrera = Vista_carrera(self)
-            nombre_carrera = self.logica.dar_carrera(self.carrera_actual)['Nombre']
-            self.vista_carrera.mostrar_competidores(nombre_carrera, self.logica.dar_competidores_carrera(self.carrera_actual))
+            nombre_carrera = self.logica.darCarrera(self.carrera_actual).nombre
+            self.vista_carrera.mostrar_competidores(nombre_carrera, self.logica.darListaCompetidores(self.carrera_actual))
         else:
             self.vista_carrera = Vista_carrera(self)
             self.vista_carrera.mostrar_competidores('',[])
@@ -184,6 +183,6 @@ class App_EPorra(QApplication):
         Esta función inserta un nuevo competidor en una carrera
         """
         self.logica.crearCompetidor(self.carrera_actual, nombre, probabilidad)
-        nombre_carrera = self.logica.darCarrera(self.carrera_actual)['nombre']
+        nombre_carrera = self.logica.darCarrera(self.carrera_actual).nombre
         self.vista_carrera.mostrar_competidores(nombre_carrera, self.logica.darListaCompetidores(self.carrera_actual))# no parece ser necesaria?
 

@@ -15,3 +15,4 @@ class Competidor(Base):
     carrera_id = Column(Integer, ForeignKey('carrera.id'))
 
     carrera = relationship("Carrera", back_populates="competidores")
+    apuesta = relationship("Apuesta", back_populates="competidores")

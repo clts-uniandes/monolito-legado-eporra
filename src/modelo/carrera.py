@@ -13,3 +13,4 @@ class Carrera(Base):
     estaTerminada = Column(Boolean, default=False)
 
     competidores = relationship('Competidor', cascade='all, delete, delete-orphan')
+    apuestas = relationship('Apuesta')

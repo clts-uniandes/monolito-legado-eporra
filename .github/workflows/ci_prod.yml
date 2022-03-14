@@ -1,0 +1,81 @@
+name: Workflow feature
+
+# Controls when the action will run. 
+on:
+  push:
+    branches:
+      - develop
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  development-test:
+    name: Pruebas
+    runs-on: ubuntu-latest
+    outputs:
+      exitoTestsStep: ${{ steps.exito_tests_step.outputs.exitoTestsStep }}
+    steps:
+    - name: Checkout de repositorio
+      uses: actions/checkout@v2
+    - name: Configuración de entorno de python
+      uses: actions/setup-python@v2
+      with:
+          python-version: '3.9'
+    - name: Instalación de librerías y dependencias
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    - name: Correr pruebas
+      id: correr-pruebas
+      run: python -m unittest discover -s tests
+    - name: Validar resultado sin errores
+      id: exito_tests_step
+      if: ${{ success() }}
+      env:
+        MENSAJE_EXITO: EXITO
+      run: echo "::set-output name=exitoTestsStep::${MENSAJE_EXITO}"
+  create-release:
+    name: Accion nueva rama RELEASE
+    runs-on: ubuntu-latest
+    needs: development-test
+    outputs:
+      exitoReleaseStep: ${{ steps.exito_release_step.outputs.exitoReleaseStep }}
+    if: ${{ (needs.development-test.outputs.exitoTestsStep == 'EXITO') && contains(github.event.head_commit.message, 'RELEASE') }}
+    steps:
+    - name: Checkout de repositorio
+      uses: actions/checkout@v2
+    - name: Crear branch de release
+      run: |
+        git checkout -b release1
+        git push -f -u origin release1
+    - name: Validar resultado sin errores
+      id: exito_release_step
+      if: ${{ success() }}
+      env:
+        MENSAJE_EXITO: EXITO
+      run: echo "::set-output name=exitoReleaseStep::${MENSAJE_EXITO}"
+  merging-release-to-main:
+    name: Accion merge de release a main
+    runs-on: ubuntu-latest
+    outputs:
+      exitoMergeMainStep: ${{ steps.exito_merge_main_step.outputs.exitoMergeMainStep }}
+    needs: create-release
+    if: ${{ (needs.create-release.outputs.exitoReleaseStep == 'EXITO') && contains(github.event.head_commit.message, 'RELEASE') }}
+    steps:
+    - name: Merge release to main
+      uses: tukasz/direct-merge-action@v2.0.2
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        source-branch: ${{ github.ref }}
+        target-branch: main
+    - name: Validar resultado con errores
+      if: ${{ failure() }}
+      env:
+        MENSAJE_ERROR: FALLO
+      run: echo "::set-output name=respuesta::${MENSAJE_ERROR}"
+    - name: Validar resultado sin errores
+      id: exito_merge_main_step
+      if: ${{ success() }}
+      env:
+        MENSAJE_EXITO: EXITO
+      run: echo "::set-output name=exitoMergeMainStep::${MENSAJE_EXITO}"
+      

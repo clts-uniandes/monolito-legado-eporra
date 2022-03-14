@@ -137,7 +137,7 @@ class Vista_lista_apuestas(QWidget):
             btn_editar.setIcon(QIcon("src/recursos/004-edit-button.png"))
             btn_editar.setIconSize(QSize(35, 35))
             btn_editar.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-            btn_editar.clicked.connect(partial(self.editar_apuesta, numero_fila-1))
+            btn_editar.clicked.connect(partial(self.editar_apuesta, apuesta["Id"]))
             self.distribuidor_actividades.addWidget(btn_editar, numero_fila, 3, alignment=Qt.AlignTop)
 
             btn_eliminar = QPushButton("", self)
