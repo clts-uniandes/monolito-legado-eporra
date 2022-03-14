@@ -16,7 +16,7 @@ class EPorra():
         return self.descripcion
     
     def darListaCarreras(self):
-        listaCarrreras = [elem.__dict__ for elem in session.query(Carrera).all()]
+        listaCarrreras = [elem.__dict__ for elem in session.query(Carrera).order_by(Carrera.nombre).all()]
         return listaCarrreras
     
     def darCarrera(self, id_carrera):
@@ -46,7 +46,6 @@ class EPorra():
         return carrera.id
 
     def eliminarCarrera(self, idCarrera = 0):
-        print(idCarrera)
         if idCarrera == 0:
             return False
         carreraAEliminar = self.darCarrera(idCarrera)

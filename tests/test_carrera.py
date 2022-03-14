@@ -21,12 +21,10 @@ class CarreraTestCase(unittest.TestCase):
         self.nombreCarrera = self.dataFactory.catch_phrase()
         nombreCompetidor1 = self.dataFactory.name()
         nombreCompetidor2 = self.dataFactory.name()
-        self.competidoresPrueba = [{'Nombre': nombreCompetidor1, 'Probabilidad':probabilidad},\
-                        {'Nombre': nombreCompetidor2, 'Probabilidad':1-probabilidad}]
-        self.competidoresPruebaProbabilidad = [{'Nombre': nombreCompetidor1, 'Probabilidad':0.8},\
-                        {'Nombre': nombreCompetidor2, 'Probabilidad':0.5}]
+        self.competidoresPrueba = [{'Nombre': nombreCompetidor1, 'Probabilidad':probabilidad}, {'Nombre': nombreCompetidor2, 'Probabilidad':1-probabilidad}]
+        self.competidoresPruebaProbabilidad = [{'Nombre': nombreCompetidor1, 'Probabilidad':0.8}, {'Nombre': nombreCompetidor2, 'Probabilidad':0.5}] 
         
-
+        
     def test_crearCarrera(self):
         resultado = self.eporra.crearCarrera(self.nombreCarrera, self.competidoresPrueba)
         self.assertGreater(resultado, 0)
@@ -55,6 +53,16 @@ class CarreraTestCase(unittest.TestCase):
         self.eporra.crearCarrera(self.nombreCarrera, self.competidoresPrueba)
         listaUnaCarrera = self.eporra.darListaCarreras()
         self.assertEqual(len(listaUnaCarrera),1)
+    
+    def test_darListaCarrerasOrdenada(self):
+        nombreCarrera2 = self.dataFactory.catch_phrase()
+        carrerasPrueba = [self.nombreCarrera,nombreCarrera2]
+        carrerasPrueba.sort()
+        self.eporra.crearCarrera(self.nombreCarrera, self.competidoresPrueba)
+        self.eporra.crearCarrera(nombreCarrera2, self.competidoresPrueba)
+        listaCarrerasOrdenada = self.eporra.darListaCarreras()
+        self.assertEqual(carrerasPrueba[0],listaCarrerasOrdenada[0]['nombre'])
+        self.assertEqual(carrerasPrueba[1],listaCarrerasOrdenada[1]['nombre'])
     
     def test_terminarCarrera(self):
         idCarrera = self.eporra.crearCarrera(self.nombreCarrera, self.competidoresPrueba)
