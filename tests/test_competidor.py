@@ -21,7 +21,6 @@ class CompetidorTestCase(unittest.TestCase):
             }
             self.competidoresPrueba.append(comp)
         self.idCarreraPrueba = self.eporra.crearCarrera(self.dataFactory.unique.name(), self.competidoresPrueba)
-        self.idCarreraPrueba2 = self.eporra.crearCarrera(self.dataFactory.unique.name(), self.competidoresPrueba)
     
     def test_crearCompetidor(self):
         resultado = self.eporra.crearCompetidor(self.idCarreraPrueba, self.competidoresPrueba[0]["Nombre"], self.competidoresPrueba[0]["Probabilidad"])
@@ -44,9 +43,7 @@ class CompetidorTestCase(unittest.TestCase):
     def test_darListaCompetidoresCarrera(self):
         for comp in self.competidoresPrueba:
             self.eporra.crearCompetidor(self.idCarreraPrueba, comp["Nombre"], comp["Probabilidad"])
-        for comp in self.competidoresPrueba:
-            self.eporra.crearCompetidor(self.idCarreraPrueba2, comp["Nombre"], comp["Probabilidad"])
-        listadoCompetidores = self.eporra.darListaCompetidores(self.idCarreraPrueba2)
+        listadoCompetidores = self.eporra.darListaCompetidores(self.idCarreraPrueba)
         self.assertEquals(2, len(listadoCompetidores))
     
     def tearDown(self):
