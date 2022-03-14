@@ -4,15 +4,19 @@ from src.logica.eporra import EPorra
 from src.modelo.declarative_base import Session
 from src.modelo.apostador import Apostador
 
+from faker import Faker
 class ApostadorTestCase(unittest.TestCase):
     
     def setUp(self):
         self.session = Session()
         self.eporra = EPorra()
+        self.dataFactory = Faker('es_MX')
+        Faker.seed(1001)
+        self.nombreApostador1 = self.dataFactory.unique.name()
+        self.nombreApostador2 = self.dataFactory.unique.name()
 
     def test_crearApostador(self):
-        nombre = "Pepe Perez"
-        resultado = self.eporra.crearApostador(nombre)
+        resultado = self.eporra.crearApostador(self.nombreApostador1 )
         self.assertTrue(resultado)
     
     def test_crearApostadorNombreVacio(self):
@@ -20,9 +24,8 @@ class ApostadorTestCase(unittest.TestCase):
         self.assertFalse(resultado)
     
     def test_crearApostadorNombreRepetido(self):
-        nombre = "Pepe Perez"
-        resultado1 = self.eporra.crearApostador(nombre)
-        resultado2 = self.eporra.crearApostador(nombre)
+        resultado1 = self.eporra.crearApostador(self.nombreApostador1)
+        resultado2 = self.eporra.crearApostador(self.nombreApostador1)
         self.assertTrue(resultado1)
         self.assertFalse(resultado2)
         
@@ -32,18 +35,15 @@ class ApostadorTestCase(unittest.TestCase):
         self.assertEqual(len(listaVacia),0)
     
     def test_darListaApostadoresUnApostador(self):
-        nombre = "Pepe Perez"
-        self.eporra.crearApostador(nombre)
+        self.eporra.crearApostador(self.nombreApostador1)
         listaUnApostador = self.eporra.darListaApostadores()
         self.assertEqual(len(listaUnApostador),1)
     
     def test_darListaApostadoresOrdenada(self):
-        nombre1 = 'Pablo Puebla'
-        nombre2 = 'Marta Conchita'
-        self.apostadoresPrueba = [nombre1,nombre2]
+        self.apostadoresPrueba = [self.nombreApostador1, self.nombreApostador2]
         self.apostadoresPrueba.sort()
-        self.eporra.crearApostador(nombre1)
-        self.eporra.crearApostador(nombre2)
+        self.eporra.crearApostador(self.nombreApostador1)
+        self.eporra.crearApostador(self.nombreApostador2)
         listaApostadoresOrdenada = self.eporra.darListaApostadores()
         self.assertEqual(self.apostadoresPrueba[0],listaApostadoresOrdenada[0]['Nombre'])
         self.assertEqual(self.apostadoresPrueba[1],listaApostadoresOrdenada[1]['Nombre'])
