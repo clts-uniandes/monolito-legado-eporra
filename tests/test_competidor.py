@@ -39,6 +39,12 @@ class CompetidorTestCase(unittest.TestCase):
     def test_darListaCompetidores(self):
         listadoCompetidores = self.eporra.darListaCompetidores()
         self.assertIsNotNone(listadoCompetidores)
+
+    def test_darListaCompetidoresCarrera(self):
+        for comp in self.competidoresPrueba:
+            self.eporra.crearCompetidor(self.idCarreraPrueba, comp["Nombre"], comp["Probabilidad"])
+        listadoCompetidores = self.eporra.darListaCompetidores(self.idCarreraPrueba)
+        self.assertEquals(2, len(listadoCompetidores))
     
     def tearDown(self):
         self.session.query(Competidor).delete()
