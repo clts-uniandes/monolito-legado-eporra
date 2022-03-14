@@ -5,26 +5,34 @@ from src.modelo.declarative_base import Session
 from src.modelo.carrera import Carrera
 from src.modelo.competidor import Competidor
 
+from faker import Faker
 class CompetidorTestCase(unittest.TestCase):
     
     def setUp(self):
         self.session = Session()
         self.eporra = EPorra()
-        self.competidoresPrueba = [{'Nombre':'Pepito Perez', 'Probabilidad':0.5},\
-                        {'Nombre':'Pepa Perez', 'Probabilidad':0.5}]
-        self.idCarrera = self.eporra.crearCarrera("Mi carrera con competidores", self.competidoresPrueba)
+        self.dataFactory = Faker('es_MX')
+        Faker.seed(1001)
+        self.competidoresPrueba = []
+        for _ in range(2):
+            comp = {
+                "Nombre": self.dataFactory.unique.name(),
+                "Probabilidad": 0.5
+            }
+            self.competidoresPrueba.append(comp)
+        self.idCarreraPrueba = self.eporra.crearCarrera(self.dataFactory.unique.name(), self.competidoresPrueba)
     
     def test_crearCompetidor(self):
-        resultado = self.eporra.crearCompetidor(self.idCarrera, "Competidor 1", 0.2)
+        resultado = self.eporra.crearCompetidor(self.idCarreraPrueba, self.competidoresPrueba[0]["Nombre"], self.competidoresPrueba[0]["Probabilidad"])
         self.assertTrue(resultado)
     
     def test_crearCompetidorDatosVacios(self):
-        resultado = self.eporra.crearCompetidor(self.idCarrera, "", None)
+        resultado = self.eporra.crearCompetidor(self.idCarreraPrueba, "", None)
         self.assertFalse(resultado)
 
     def test_crearCompetidorDuplicado(self):
-        resultado1 = self.eporra.crearCompetidor(self.idCarrera, "Competidor A", 0.2)
-        resultado2 = self.eporra.crearCompetidor(self.idCarrera, "Competidor A", 0.2)
+        resultado1 = self.eporra.crearCompetidor(self.idCarreraPrueba, self.competidoresPrueba[0]["Nombre"], self.competidoresPrueba[0]["Probabilidad"])
+        resultado2 = self.eporra.crearCompetidor(self.idCarreraPrueba, self.competidoresPrueba[0]["Nombre"], self.competidoresPrueba[0]["Probabilidad"])
         self.assertTrue(resultado1)
         self.assertFalse(resultado2)
     
