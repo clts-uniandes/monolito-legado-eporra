@@ -59,8 +59,8 @@ class EPorra():
         session.commit()
         return True
 
-    def darListaCompetidores(self, id = ""):
-        listaCompetidores = session.query(Competidor.id.label("id"), Competidor.nombre.label("Nombre"), Competidor.probabilidad.label("Probabilidad"), Competidor.carrera_id.label("idCarrera")).filter(Carrera.id.in_([id])).all() 
+    def darListaCompetidores(self, idCarrera = 0):
+        listaCompetidores = session.query(Competidor.id.label("id"), Competidor.nombre.label("Nombre"), Competidor.probabilidad.label("Probabilidad"), Competidor.carrera_id.label("idCarrera")).filter(Competidor.carrera_id == idCarrera).all() 
         return [dict(zip(v.keys(), v)) for v in listaCompetidores]
     
     def crearCompetidor(self, carrera_actual, nombree, probabilidadd):
