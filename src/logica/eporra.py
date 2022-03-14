@@ -66,7 +66,7 @@ class EPorra():
     def crearCompetidor(self, carrera_actual, nombree, probabilidadd):
         if not nombree or not probabilidadd:
             return False
-        competidorExistente = session.query(Competidor).filter(Competidor.nombre == nombree).all()
+        competidorExistente = session.query(Competidor).filter(Competidor.nombre == nombree, Competidor.carrera_id == carrera_actual).all()
         if len(competidorExistente) > 0:
             return False
         carreraPadre = session.query(Carrera).filter(Carrera.id == carrera_actual).first()
