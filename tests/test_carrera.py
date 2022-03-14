@@ -21,12 +21,10 @@ class CarreraTestCase(unittest.TestCase):
         self.nombreCarrera = self.dataFactory.catch_phrase()
         nombreCompetidor1 = self.dataFactory.name()
         nombreCompetidor2 = self.dataFactory.name()
-        self.competidoresPrueba = [{'Nombre': nombreCompetidor1, 'Probabilidad':probabilidad},\
-                        {'Nombre': nombreCompetidor2, 'Probabilidad':1-probabilidad}]
-        self.competidoresPruebaProbabilidad = [{'Nombre': nombreCompetidor1, 'Probabilidad':0.8},\
-                        {'Nombre': nombreCompetidor2, 'Probabilidad':0.5}]
+        self.competidoresPrueba = [{'Nombre': nombreCompetidor1, 'Probabilidad':probabilidad}, {'Nombre': nombreCompetidor2, 'Probabilidad':1-probabilidad}]
+        self.competidoresPruebaProbabilidad = [{'Nombre': nombreCompetidor1, 'Probabilidad':0.8}, {'Nombre': nombreCompetidor2, 'Probabilidad':0.5}]
         
-
+        
     def test_crearCarrera(self):
         resultado = self.eporra.crearCarrera(self.nombreCarrera, self.competidoresPrueba)
         self.assertGreater(resultado, 0)
