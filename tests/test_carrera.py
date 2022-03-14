@@ -56,6 +56,16 @@ class CarreraTestCase(unittest.TestCase):
         listaUnaCarrera = self.eporra.darListaCarreras()
         self.assertEqual(len(listaUnaCarrera),1)
     
+    def test_darListaCarrerasOrdenada(self):
+        nombreCarrera2 = self.dataFactory.catch_phrase()
+        carrerasPrueba = [self.nombreCarrera,nombreCarrera2]
+        carrerasPrueba.sort()
+        self.eporra.crearCarrera(self.nombreCarrera, self.competidoresPrueba)
+        self.eporra.crearCarrera(nombreCarrera2, self.competidoresPrueba)
+        listaCarrerasOrdenada = self.eporra.darListaCarreras()
+        self.assertEqual(carrerasPrueba[0],listaCarrerasOrdenada[0]['nombre'])
+        self.assertEqual(carrerasPrueba[1],listaCarrerasOrdenada[1]['nombre'])
+    
     def test_terminarCarrera(self):
         idCarrera = self.eporra.crearCarrera(self.nombreCarrera, self.competidoresPrueba)
         resultado = self.eporra.terminarCarrera(idCarrera)
